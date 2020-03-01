@@ -1,64 +1,54 @@
-@extends('admin.layout.index')
-@section('content')
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2>Edit New User</h2>
+<div class="modal fade" id="ajax-crud-modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="userCrudModal">Update Category</h1>
             </div>
-            <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('users.index') }}"> Back</a>
+            <div class="modal-body">
+                <form id="editForm" name="editForm" class="form-horizontal"
+                      action="{{route('category.update',$category->id)}}" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="category_id" id="category_id" value="{{$category->id}}">
+                    <input type="hidden" name="_method" value="PUT">
+                    @csrf
+                    <div class="form-group">
+                        <label class="col-sm-12">Category Name</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="category_name" name="category_name"
+                                   placeholder="Enter Category Name"
+                                   value="{{$category->category_name}}" maxlength="50" required="">
+                            <input type="hidden" value="{{$category->id}}" id="category_id_form" name="id">
+                            <span class="text-danger">
+                                <strong id="category_name-error"></strong>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-12">Date Created</label>
+                        <div class="col-sm-12">
+                            {!! Form::date('created_at',$category->created_at,['class'=>'form-control','id'=>'created_at']) !!}
+                            <span class="text-danger">
+                                <strong id="created_at-error"></strong>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-12">Date Updated</label>
+                        <div class="col-sm-12">
+                            {!! Form::date('updated_at',$category->created_at,['class'=>'form-control','id'=>'updated_at']) !!}
+                            {{--                            {!! Form::date('updated_at',$category->created_at,['class'=>'form-control','id'=>'updated_at']) !!}--}}
+                            <span class="text-danger">
+                                <strong id="updated_at-error"></strong>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn-savechanges" value="edit_category">Save changes
+                </button>
+                <button type="button" class="btn btn-default" id="btn-back" value="back">Back
+                </button>
             </div>
         </div>
     </div>
-
-
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>Whoops!</strong> There were some problems with your input.<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-
-    {!! Form::model($user, ['method' => 'PATCH','route' => ['users.update', $user->id]]) !!}
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Name:</strong>
-                {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Email:</strong>
-                {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control')) !!}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Password:</strong>
-                {!! Form::password('password', array('placeholder' => 'Password','class' => 'form-control')) !!}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Confirm Password:</strong>
-                {!! Form::password('confirm-password', array('placeholder' => 'Confirm Password','class' => 'form-control')) !!}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Role:</strong>
-                {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control','multiple')) !!}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-    </div>
-    {!! Form::close() !!}
-@endsection
+</div>
