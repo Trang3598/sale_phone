@@ -28,8 +28,6 @@ class OrderDetailRequest extends FormRequest
             'product_id' => 'required',
             'sale_quantity' => 'required|numeric|digits_between:1,20',
             'price' => 'required|numeric|digits_between:1,20',
-            'created_at' => 'required|date|before_or_equal:updated_at|before:tomorrow',
-            'updated_at' => 'required|date|after_or_equal:created_at|before:tomorrow'
         ];
         return $arr_validate;
     }

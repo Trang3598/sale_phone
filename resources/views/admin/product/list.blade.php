@@ -62,25 +62,8 @@
                     <th>ID</th>
                     <th>Category Name</th>
                     <th>Phone Name</th>
-                    <th>Title</th>
-                    <th>Description</th>
                     <th>Quantity</th>
-                    <th>Detail</th>
                     <th>Price(VND)</th>
-                    <th>Size</th>
-                    <th>Memory</th>
-                    <th>Weight</th>
-                    <th>Speed CPU</th>
-                    <th>RAM</th>
-                    <th>OS</th>
-                    <th>Camera Primary</th>
-                    <th>Battery</th>
-                    <th>Wlan</th>
-                    <th>Warranty</th>
-                    <th>Bluetooth</th>
-                    <th>Promotion Price(VND)</th>
-                    <th>Start Promotion</th>
-                    <th>End Promotion</th>
                     <th>Sale Phone Status</th>
                     <th>Date Created</th>
                     <th>Date Updated</th>
@@ -94,25 +77,8 @@
                             <td id="product_id_{{$product->id}}">{{$product->id}}</td>
                             <td id="id_cate_{{$product->id}}">{{(isset($product->category->category_name)) ?$product->category->category_name:''}}</td>
                             <td id="name_phone_{{$product->id}}">{{$product->name_phone}}</td>
-                            <td id="title_{{$product->id}}">{{$product->title}}</td>
-                            <td id="description_{{$product->id}}">{{$product->description}}</td>
                             <td id="quantity_{{$product->id}}">{{$product->quantity}}</td>
-                            <td id="detail_{{$product->id}}">{{$product->detail}}</td>
                             <td id="price_{{$product->id}}">{{$product->price}}</td>
-                            <td id="size_{{$product->id}}">{{$product->size}}</td>
-                            <td id="memory_{{$product->id}}">{{$product->memory}}</td>
-                            <td id="weight_{{$product->id}}">{{$product->weight}}</td>
-                            <td id="cpu_speed_{{$product->id}}">{{$product->cpu_speed}}</td>
-                            <td id="ram_{{$product->id}}">{{$product->ram}}</td>
-                            <td id="os_{{$product->id}}">{{$product->os}}</td>
-                            <td id="camera_primary_{{$product->id}}">{{$product->camera_primary}}</td>
-                            <td id="battery_{{$product->id}}">{{$product->battery}}</td>
-                            <td id="promotion_price_{{$product->id}}">{{$product->wlan}}</td>
-                            <td id="warranty_{{$product->id}}">{{$product->warranty}}
-                            <td id="bluetooth_{{$product->id}}">{{$product->bluetooth}}</td>
-                            <td id="name_phone_{{$product->id}}">{{$product->promotion_price}}</td>
-                            <td id="start_promotion_{{$product->id}}">{{isset($product->start_promotion)?$product->start_promotion->format('d/m/Y'):''}}</td>
-                            <td id="end_promotion_{{$product->id}}">{{isset($product->end_promotion)?$product->end_promotion->format('d/m/Y'):''}}</td>
                             <td id="sale_phone_{{$product->id}}">{{$product->sale_phone == 1 ? "Best Seller" : "Unmarketable"}}</td>
                             <td id="created_at_{{$product->id}}">{{isset($product->created_at)?$product->created_at->format('d/m/Y'):''}}</td>
                             <td id="updated_at_{{$product->id}}">{{isset($product->updated_at)?$product->updated_at->format('d/m/Y'):''}}</td>
@@ -210,13 +176,10 @@
                             contentType: false,
                             processData: false,
                             success: function (data) {
-                                var dataItem = '<tr id="id_' + data.id + '"><td id = "product_id_">' + data.id + '</td><td id="id_cate_">' + data.id_cate + '</td><td id="name_phone_">' + data.name_phone
-                                    + '</td><td id="title_">' + data.title + '</td><td id="description_">' + data.description + '</td><td id="quantity_">' + data.quantity + '</td><td id="detail_">' + data.detail
-                                    + '</td><td id="price_">' + data.price + '</td><td id="size_">' + data.size + '</td><td id="ram_">' + data.ram + '</td><td id="memory_">' + data.memory
-                                    + '</td><td id="weight_">' + data.weight + '</td><td id="cpu_speed_">' + data.cpu_speed + '</td><td id="os_">' + data.os + '</td><td id="camera_primary_">' + data.camera_primary
-                                    + '</td><td id="battery_">' + data.battery + '</td><td id="warranty_">' + data.warranty + '</td><td id="wlan_">' + data.wlan + '</td><td id = "memory_">' + data.memory + '</td><td id ="promotion_price_">'
-                                    + data.promotion_price + '</td><td id = "start_promotion_">' + data.start_promotion + '</td><td id = "end_promotion_">' + data.end_promotion + '</td><td id = "sale_phone_">' + data.sale_phone + '</td><td id = "created_at_">' + data.created_at
+                                var dataItem = '<tr id="id_' + data.id + '"><td id = "product_id_">' + data.id + '</td><td id="id_cate_">' + data.id_cate + '</td><td id="name_phone_">' + data.name_phone + '</td><td id="quantity_">' + data.quantity +
+                                    '</td><td id="price_">' + data.price + '</td><td id = "sale_phone_">' + data.sale_phone + '</td><td id = "created_at_">' + data.created_at
                                     + '</td><td id = "updated_at_">' + data.updated_at + '</td>';
+                                dataItem += '<td><a href="javascript:void(0)" id="image-product" data-id="' + data.id + '" class="image-product btn btn-primary">Watch</a></td>';
                                 dataItem += '<td><a href="javascript:void(0)" id="edit-product" data-id="' + data.id + '" class="btn btn-success mr-2">Update</a></td>';
                                 dataItem += '<td><a href="javascript:void(0)" id="delete-product" data-id="' + data.id + '" class="btn btn-danger delete-user ml-1">Delete</a></td></tr>';
                                 $('#listItem').append(dataItem);

@@ -44,8 +44,8 @@
                             <tr id="id_{{ $category->id }}">
                                 <td id="category_id_{{$category->id}}">{{$category->id}}</td>
                                 <td id="category_name_{{$category->id}}">{{$category->category_name}}</td>
-                                <td id="created_at_{{$category->id}}">{{$category->created_at->format('d/m/Y')}}</td>
-                                <td id="updated_at_{{$category->id}}">{{$category->updated_at->format('d/m/Y')}}</td>
+                                <td id="created_at_{{$category->id}}">{{isset($category->created_at)?$category->created_at->format('d/m/Y'):''}}</td>
+                                <td id="updated_at_{{$category->id}}">{{isset($category->updated_at)?$category->updated_at->format('d/m/Y'):''}}</td>
                                 @can('category-edit')
                                     <td>
                                         <div class="btn-edit">

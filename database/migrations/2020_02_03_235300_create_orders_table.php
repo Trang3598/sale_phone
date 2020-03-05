@@ -23,8 +23,8 @@ class CreateOrdersTable extends Migration
             $table->bigInteger('deliverer_id')->unsigned();
             $table->foreign('deliverer_id')->references('id')->on('deliverer')->onDelete('cascade')->onUpdate('no action');
             $table->integer('total_price');
-            $table->string('delivery_address',255);
-            $table->string('note',255)->nullable();
+            $table->string('delivery_address',190);
+            $table->string('note',190)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

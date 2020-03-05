@@ -26,8 +26,6 @@ class DelivererRequest extends FormRequest
         $arr_validate = [
             'deliverer_name' => 'required|max:50|min:3|unique:deliverer',
             'deliverer_phone' => 'required|numeric|unique:deliverer|digits_between:1,10',
-            'created_at' => 'required|date|before_or_equal:updated_at|before:tomorrow',
-            'updated_at' => 'required|date|after_or_equal:created_at|before:tomorrow'
         ];
         if ($this->deliverer) {
             $arr_validate['deliverer_name'] = 'required|max:50|min:3|unique:deliverer,deliverer_name,' . $this->deliverer;

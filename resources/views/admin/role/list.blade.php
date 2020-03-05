@@ -44,14 +44,14 @@
                                 <td id="name_{{$role->id}}">{{$role->name}}</td>
                                 <td id="created_at_{{$role->id}}">{{$role->created_at->format('d/m/Y')}}</td>
                                 <td id="updated_at_{{$role->id}}">{{$role->updated_at->format('d/m/Y')}}</td>
-                                @can('role-edit')
+{{--                                @can('role-edit')--}}
                                     <td>
                                         <div class="btn-edit">
                                             <a href="javascript:void(0)" class="edit-role btn btn-success"
                                                data-id="{{$role->id}}">Update</a>
                                         </div>
                                     </td>
-                                @endcan
+{{--                                @endcan--}}
                                 @can('role-delete')
                                     <td>
                                         <a href="javascript:void(0)" id="delete-role"

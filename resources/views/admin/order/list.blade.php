@@ -61,7 +61,7 @@
                                 <td>
                                     <a href="javascript:void(0)" id="detail-order"
                                        data-id="{{$order->id}}"
-                                       class="btn btn-warning detail-order">See Detail</a>
+                                       class="btn btn-warning detail-order">Detail</a>
                                 </td>
                                 @can('order-edit')
                                     <td>

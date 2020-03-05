@@ -26,11 +26,9 @@ class ImageRequest extends FormRequest
         $arr_validate = [
             'image' => 'required|image|mimes:jpeg,bmp,png|max:2000|unique:images,image',
             'product_id' => 'required',
-            'created_at' => 'required|date|before_or_equal:updated_at|before:tomorrow',
-            'updated_at' => 'required|date|after_or_equal:created_at|before:tomorrow'
         ];
         if ($this->image) {
-            $arr_validate['image'] = 'required|mimes:jpeg,bmp,png|max:2000|unique:images,image,' . $this->image;
+            $arr_validate['image'] = 'required|mimes:jpeg,bmp,png,jpg|max:2000|unique:images,image,' . $this->image;
         }
         return $arr_validate;
     }

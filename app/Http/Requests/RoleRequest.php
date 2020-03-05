@@ -25,8 +25,6 @@ class RoleRequest extends FormRequest
     {
         $arr_validate = [
             'name' => 'required|max:50|min:3|unique:roles',
-            'created_at' => 'required|date|before_or_equal:updated_at|before:tomorrow',
-            'updated_at' => 'required|date|after_or_equal:created_at|before:tomorrow'
         ];
         if ($this->role) {
             $arr_validate['name'] = 'required|max:50|min:3|unique:roles,name,' . $this->role;

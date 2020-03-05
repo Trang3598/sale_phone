@@ -26,8 +26,6 @@ class SalePhoneRequest extends FormRequest
         $arr_validate = [
             'phone_id' => 'required',
             'quantity' => 'required|numeric|digits_between:1,10',
-            'created_at' => 'required|date|before_or_equal:updated_at|before:tomorrow',
-            'updated_at' => 'required|date|after_or_equal:created_at|before:tomorrow'
         ];
         return $arr_validate;
     }

@@ -31,6 +31,7 @@
                     <tr class="text-center">
                         <th>ID</th>
                         <th>Username</th>
+                        <th>Avatar</th>
                         <th>Fullname</th>
                         <th>Email</th>
                         <th>Roles</th>
@@ -47,6 +48,8 @@
                             <tr id="id_{{ $user->id }}">
                                 <td id="user_id_{{$user->id}}">{{$user->id}}</td>
                                 <td id="username_{{$user->id}}">{{$user->username}}</td>
+                                <td id="avatar_{{$user->id}}"><img src="images/{{$user->avatar}}"
+                                                                   style="width: 100px;height:100px"></td>
                                 <td id="full_name_{{$user->id}}">{{$user->full_name}}</td>
                                 <td id="email_{{$user->id}}">{{$user->email}}</td>
                                 <td id="role_{{$user->id}}">
@@ -56,8 +59,8 @@
                                         @endforeach
                                     @endif
                                 </td>
-                                <td id="created_at_{{$user->id}}">{{$user->created_at->format('d/m/Y')}}</td>
-                                <td id="updated_at_{{$user->id}}">{{$user->updated_at->format('d/m/Y')}}</td>
+                                <td id="created_at_{{$user->id}}">{{isset($user->created_at)?$user->created_at->format('d/m/Y'):''}}</td>
+                                <td id="updated_at_{{$user->id}}">{{isset($user->updated_at)?$user->updated_at->format('d/m/Y'):''}}</td>
                                 @can('user-edit')
                                     <td>
                                         <div class="btn-edit">
@@ -108,6 +111,15 @@
                                 $('#userCrudModal').html("Add New User");
                                 $('#btn-save').val("add-user");
                                 $('#ajax-crud-modal').modal('show');
+                                $(".toggle-password").click(function () {
+                                    $(this).toggleClass("fa-eye fa-eye-slash");
+                                    var input = $($(this).attr("toggle"));
+                                    if (input.attr("type") == "password") {
+                                        input.attr("type", "text");
+                                    } else {
+                                        input.attr("type", "password");
+                                    }
+                                });
                             })
                         });
                         $(document).on('click', '.edit-user', function () {
@@ -117,7 +129,7 @@
                                 $('#userCrudModal').html("Edit User Information");
                                 $('#btn-save').val("edit-user");
                                 $('#ajax-crud-modal').modal('show');
-                            })
+                            });
                         });
                     });
                     $(document).on('click', '#btn-save', function (event) {
@@ -134,7 +146,7 @@
                                 contentType: false,
                                 processData: false,
                                 success: function (data) {
-                                    var dataItem = '<tr id="id_' + data.id + '"><td>' + data.id + '</td><td>' + data.username + '</td><td>' + data.full_name + '</td><td>' + data.email + '</td><td>' + data.roles + '</td><td>' + data.created_at + '</td><td>' + data.updated_at + '</td>';
+                                    var dataItem = '<tr id="id_' + data.id + '"><td>' + data.id + '</td><td>' + data.username + '</td><td><img id="avatar_' + data.id + '"  src = "images/' + data.avatar + '" alt ="" style="height:100px;width:100px" class="img-responsive" />' + '</td><td>' + data.full_name + '</td><td>' + data.email + '</td><td>' + data.roles + '</td><td>' + data.created_at + '</td><td>' + data.updated_at + '</td>';
                                     dataItem += '<td><a href="javascript:void(0)" id="edit-user" data-id="' + data.id + '" class="btn btn-success mr-2">Update</a></td>';
                                     dataItem += '<td><a href="javascript:void(0)" id="delete-user" data-id="' + data.id + '" class="btn btn-danger delete-user ml-1">Delete</a></td></tr>';
                                     $('#listItem').append(dataItem);
@@ -144,8 +156,9 @@
                                     $('#showmess').html('Add successfully').css({'display': 'block'});
                                 },
                                 error: function (data) {
-                                    if (data.responseJSON.errors.username) {
+                                    if (data.responseJSON.errors) {
                                         $('#username-error').html(data.responseJSON.errors.username);
+                                        $('#avatar-error').html(data.responseJSON.errors.avatar);
                                         $('#full_name-error').html(data.responseJSON.errors.full_name);
                                         $('#email-error').html(data.responseJSON.errors.email);
                                         $('#password-error').html(data.responseJSON.errors.password);
@@ -174,6 +187,7 @@
                                 processData: false,
                                 success: function (data) {
                                     $("#username_" + data.id).html(data.username);
+                                    $("#avatar_" + data.id).attr('src', 'images/' + data.avatar);
                                     $("#full_name_" + data.id).html(data.full_name);
                                     $("#email_" + data.id).html(data.email);
                                     $("#role_" + data.id).html(data.roles);
@@ -188,11 +202,8 @@
                                     if (data.responseJSON.errors.username) {
                                         $('#username-error').html(data.responseJSON.errors.username);
                                     }
-                                    if (data.responseJSON.errors.created_at) {
-                                        $('#created_at-error').html(data.responseJSON.errors.created_at);
-                                    }
-                                    if (data.responseJSON.errors.updated_at) {
-                                        $('#updated_at-error').html(data.responseJSON.errors.updated_at);
+                                    if (data.responseJSON.errors.avatar) {
+                                        $('#avatar-error').html(data.responseJSON.errors.avatar);
                                     }
                                     if (data.responseJSON.errors.full_name) {
                                         $('#full_name-error').html(data.responseJSON.errors.full_name);

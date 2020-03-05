@@ -45,9 +45,6 @@
                         <label class="col-sm-12">Description</label>
                         <div class="col-sm-12">
                             <textarea id="description" type="text" class="form-control" name="description"></textarea>
-{{--                            <script>--}}
-{{--                                CKEDITOR.replace('description');--}}
-{{--                            </script>--}}
                             <span class="text-danger">
                                 <strong id="description-error"></strong>
                             </span>
@@ -255,24 +252,6 @@
                             </div>
                             <span class="text-danger">
                                 <strong id="sale_phone-error"></strong>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-12">Date Created</label>
-                        <div class="col-sm-12">
-                            <input type="date" class="form-control" id="created_at" name="created_at">
-                            <span class="text-danger">
-                                <strong id="created_at-error"></strong>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-12">Date Updated</label>
-                        <div class="col-sm-12">
-                            <input type="date" class="form-control" id="updated_at" name="updated_at">
-                            <span class="text-danger">
-                                <strong id="updated_at-error"></strong>
                             </span>
                         </div>
                     </div>

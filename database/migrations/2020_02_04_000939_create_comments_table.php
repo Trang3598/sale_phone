@@ -20,8 +20,8 @@ class CreateCommentsTable extends Migration
             $table->bigInteger('product_id')->unsigned()->nullable();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('no action');
             $table->dateTime('comment_time');
-            $table->string('comment_content',255);
-            $table->string('phone_number',255);
+            $table->string('comment_content',190);
+            $table->string('phone_number',190);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -24,6 +24,15 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 
     <![endif]-->
+    <style>
+        .field-icon {
+            float: right;
+            margin-left: -25px;
+            margin-top: -25px;
+            position: relative;
+            z-index: 2;
+        }
+    </style>
 </head>
 <body>
 <div class="preloader">
@@ -38,7 +47,7 @@
             <div class="navbar-header" data-logobg="skin5">
                 <!-- This is for the sidebar toggle which is visible on mobile only -->
                 <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
-                            class="ti-menu ti-close"></i></a>
+                        class="ti-menu ti-close"></i></a>
                 <a class="navbar-brand" href="index.html">
                     <!-- Logo icon -->
                     <b class="logo-icon p-l-10">
@@ -101,7 +110,7 @@
 <script src="{{asset('admin/assets/libs/flot/jquery.flot.crosshair.js')}}"></script>
 <script src="{{asset('admin/assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js')}}"></script>
 <script src="{{asset('admin/dist/js/pages/chart/chart-page-init.js')}}"></script>
-
+<script src="{{asset('js/admin/update_account.js')}}"></script>
 </body>
 </html>
 @yield('form-add')

@@ -16,8 +16,10 @@ class CreateColorsTable extends Migration
         Schema::create('colors', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('product_id')->unsigned();
+            $table->bigInteger('order_detail_id')->unsigned();
             $table->string('color_name',50);
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('no action');
+            $table->foreign('order_detail_id')->references('id')->on('order_details')->onDelete('cascade')->onUpdate('no action');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -28,8 +28,6 @@ class CommentRequest extends FormRequest
             'comment_time' => 'required|date|before:tomorrow',
             'comment_content' => 'required|min:5|string|max:255',
             'phone_number' => 'required|numeric|digits_between:1,10',
-            'created_at' => 'required|date|before_or_equal:updated_at|before:tomorrow',
-            'updated_at' => 'required|date|after_or_equal:created_at|before:tomorrow'
         ];
 //        if ($this->comment) {
 //            $arr_validate['phone_number'] = 'required|numeric|digits_between:1,10|unique:comments,phone_number,' . $this->comment;

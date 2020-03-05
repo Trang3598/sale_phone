@@ -26,8 +26,6 @@ class ColorRequest extends FormRequest
         $arr_validate = [
             'product_id' => 'required',
             'color_name' => 'required',
-            'created_at' => 'required|date|before_or_equal:updated_at|before:tomorrow',
-            'updated_at' => 'required|date|after_or_equal:created_at|before:tomorrow'
         ];
         return $arr_validate;
     }

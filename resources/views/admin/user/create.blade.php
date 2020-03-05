@@ -22,6 +22,16 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-12">Avatar</label>
+                        <div class="col-sm-12">
+                            <input type="file" class=" form-control btn btn-info btn-sm waves-effect waves-light "
+                                   id="avatar" name="avatar" value="" required="">
+                            <span class="text-danger">
+                                <strong id="avatar-error"></strong>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-12">Full Name</label>
                         <div class="col-sm-12">
                             <input type="text" class="form-control" id="full_name" name="full_name"
@@ -49,6 +59,7 @@
                             <input type="password" class="form-control" id="password" name="password"
                                    placeholder="Enter password"
                                    value="" maxlength="50" required="">
+                            <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                             <span class="text-danger">
                                 <strong id="password-error"></strong>
                             </span>

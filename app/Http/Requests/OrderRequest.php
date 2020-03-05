@@ -31,8 +31,6 @@ class OrderRequest extends FormRequest
             'deliverer_id' => 'required',
             'total_price' => 'required|numeric',
             'delivery_address' =>'required|min:5|max:255',
-            'created_at' => 'required|date|before_or_equal:updated_at|before:tomorrow',
-            'updated_at' => 'required|date|after_or_equal:created_at|before:tomorrow'
         ];
         if ($this->order) {
             $arr_validate['customer_name'] = 'required|max:50|min:3|unique:orders,customer_name,' . $this->order;

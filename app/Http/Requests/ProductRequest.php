@@ -26,8 +26,8 @@ class ProductRequest extends FormRequest
         $arr_validate = [
             'id_cate' => 'required',
             'name_phone' => 'required|min:5|max:50|unique:products,name_phone',
-            'title' => 'required|min:5',
-            'description' => 'required|min:5',
+            'title' => 'required|min:5|max:190',
+            'description' => 'required|min:5|max:190',
             'quantity' => 'required|numeric|digits_between:1,10',
             'detail' => 'required|min:5|max:255',
             'price' => 'required|numeric|digits_between:1,20',
@@ -45,8 +45,6 @@ class ProductRequest extends FormRequest
             'start_promotion' => 'required|date|before_or_equal:end_promotion',
             'end_promotion' => 'required|date|after_or_equal:start_promotion',
             'sale_phone' => 'required',
-            'created_at' => 'required|date|before_or_equal:updated_at|before:tomorrow',
-            'updated_at' => 'required|date|after_or_equal:created_at|before:tomorrow',
             'battery' => 'required'
         ];
         if ($this->product) {

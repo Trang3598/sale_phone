@@ -22,6 +22,20 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-12">Avatar</label>
+                        <div class="col-sm-12">
+                            @isset($user->avatar)
+                                <img src="images/{{$user->avatar}}" id="output"
+                                     alt="example placeholder avatar" width="200px" height="200px">
+                            @endisset
+                            <input type="file" class=" form-control btn btn-info btn-sm waves-effect waves-light "
+                                   id="avatar" name="avatar" value="" required="">
+                            <span class="text-danger">
+                                <strong id="avatar-error"></strong>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-12">Full Name</label>
                         <div class="col-sm-12">
                             <input type="text" class="form-control" id="full_name" name="full_name"
@@ -47,8 +61,7 @@
                         <label class="col-sm-12">Password</label>
                         <div class="col-sm-12">
                             <input type="password" class="form-control" id="password" name="password"
-                                   placeholder="Enter password"
-                                   value="" maxlength="50" required="">
+                                   placeholder="Enter password" maxlength="50" required="">
                             <span class="text-danger">
                                 <strong id="password-error"></strong>
                             </span>
@@ -58,8 +71,7 @@
                         <label class="col-sm-12">Confirm password</label>
                         <div class="col-sm-12">
                             <input type="password" class="form-control" id="confirm" name="confirm"
-                                   placeholder="Enter confirm password"
-                                   value="" maxlength="50" required="">
+                                   placeholder="Enter confirm password"  maxlength="50" required="">
                             <span class="text-danger">
                                 <strong id="confirm-error"></strong>
                             </span>
