@@ -1,4 +1,7 @@
 <?php
+
+use Illuminate\Support\Facades\Broadcast;
+
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -16,6 +19,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::resource('comment', 'CommentController');
     Route::resource('sale_phone', 'SalePhoneController');
     Route::resource('role', 'RoleController');
+    Route::resource('dashboard', 'DashboardController');
     Route::get('image/{image}/showImage', 'ImageController@showImage')->name('image.showImage');
     Route::get('export', 'ProductController@export')->name('product.export');
     //delete route
@@ -52,6 +56,24 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');;
 Route::get('/permission', function () {
     return view('admin.error.403');
 })->name('error.permission');
-Route::get('/account', 'UserController@account')->name('user.account')->middleware('auth');;
-Route::post('settingAccount/{user}', 'UserController@settingAccount')->name('user.settingAccount')->middleware('auth');;
-Route::get('/chat', 'ChatController@chat')->name('chat')->middleware('auth');;
+Route::get('/account', 'UserController@account')->name('user.account');
+Route::post('settingAccount/{user}', 'UserController@settingAccount')->name('user.settingAccount');
+Route::get('admin/order/detail/{id}', 'OrderController@detail')->name('detail')->middleware('auth');
+Route::get('admin/order/add_order_detail/{id}', 'OrderController@addOrderDetail')->name('add_order_detail')->middleware('auth');
+Route::post('admin/order/set_price', 'OrderController@setPrice')->name('set_price')->middleware('auth');
+Route::post('admin/order/add_order_detail_action/{id}', 'OrderController@addOrderDetailAction')->name('add_order_detail_action')->middleware('auth');
+Route::get('admin/order/delete_product_from_cart/{id}', 'OrderController@deleteProductFromCart')->name('delete_product_from_cart')->middleware('auth');
+Route::get('admin/order/update_view_order_detail/{id}', 'OrderController@updateViewOrderDetail')->name('update_view_order_detail')->middleware('auth');
+Route::post('admin/order/update_order_detail/{id}', 'OrderController@updateOrderDetail')->name('update_order_detail')->middleware('auth');
+Route::get('pdf/{id}', 'OrderController@exportPDF')->name('export_pdf')->middleware('auth');
+Auth::routes();
+
+Route::prefix('chat')->name('client.chat.')->group(function () {
+    Route::get('', 'Client\ChatController@index')->name('index')->middleware('auth');
+    Route::post('/submit', 'Client\ChatController@submit')->name('submit')->middleware('auth');
+});
+
+Route::middleware('auth')->prefix('admin-chat')->name('admin.chat.')->group(function () {
+    Route::get('', 'Admin\ChatController@index')->name('index')->middleware('auth');
+    Route::post('/submit', 'Admin\ChatController@submit')->name('submit')->middleware('auth');
+});

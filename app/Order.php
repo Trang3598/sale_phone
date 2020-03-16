@@ -26,4 +26,8 @@ class Order extends Model
     {
         return $this->hasOne('App\Status', 'id', 'status_id');
     }
+    public function product()
+    {
+        return $this->hasManyThrough('App\Product','App\OrderDetail');
+    }
 }

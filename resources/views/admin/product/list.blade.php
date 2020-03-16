@@ -78,7 +78,7 @@
                             <td id="id_cate_{{$product->id}}">{{(isset($product->category->category_name)) ?$product->category->category_name:''}}</td>
                             <td id="name_phone_{{$product->id}}">{{$product->name_phone}}</td>
                             <td id="quantity_{{$product->id}}">{{$product->quantity}}</td>
-                            <td id="price_{{$product->id}}">{{$product->price}}</td>
+                            <td id="price_{{$product->id}}">{{number_format($product->price)}}</td>
                             <td id="sale_phone_{{$product->id}}">{{$product->sale_phone == 1 ? "Best Seller" : "Unmarketable"}}</td>
                             <td id="created_at_{{$product->id}}">{{isset($product->created_at)?$product->created_at->format('d/m/Y'):''}}</td>
                             <td id="updated_at_{{$product->id}}">{{isset($product->updated_at)?$product->updated_at->format('d/m/Y'):''}}</td>

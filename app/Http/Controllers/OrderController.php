@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Deliverer;
+use App\Http\Requests\OrderDetailRequest;
 use App\Http\Requests\OrderRequest;
 use App\Order;
 use App\OrderDetail;
 use App\Product;
 use App\Repositories\Repository;
 use App\Status;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 
@@ -24,8 +28,8 @@ class OrderController extends Controller
         $this->order = new Repository($order);
         $this->order_detail = new Repository($orderDetail);
         $this->middleware('permission:order-list');
-        $this->middleware('permission:order-create', ['only' => ['create','store']]);
-        $this->middleware('permission:order-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:order-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:order-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:order-delete', ['only' => ['destroy']]);
     }
 
@@ -34,7 +38,7 @@ class OrderController extends Controller
         $items = $request->items ?? 10;
         $count = $this->order->all($items)->total();
         $orders = $this->order->all($items);
-        return view('admin.order.list', compact('orders','items','count'));
+        return view('admin.order.list', compact('orders', 'items', 'count'));
     }
 
     public function create()
@@ -108,5 +112,110 @@ class OrderController extends Controller
             }
             return Response($output);
         }
+    }
+
+    public function detail($id)
+    {
+        $order = $this->order->find($id);
+        $deliverer = $this->order->with(['deliverer'])->where('orders.id', '=', $id)
+            ->join('deliverer', 'orders.deliverer_id', '=', 'deliverer.id')
+            ->select('deliverer.*')
+            ->get()[0];
+        $status = $this->order->with(['status'])->where('orders.id', '=', $id)
+            ->join('status', 'orders.status_id', '=', 'status.id')
+            ->select('status.*')
+            ->get()[0];
+        $order_details = $this->order->with(['orderDetail'])
+            ->join('order_details', 'order_details.order_id', '=', 'orders.id')
+            ->join('products', 'order_details.product_id', '=', 'products.id')
+            ->where('order_details.deleted_at', null)
+            ->where('order_details.order_id', '=', $id)
+            ->select('order_details.*', 'products.name_phone')->get();
+        $total_price = 0;
+        foreach ($order_details as $order_detail) {
+            $total_price = $total_price + ($order_detail->price) * ($order_detail->sale_quantity);
+        }
+        DB::table('orders')->where('id', '=', $id)->update(['total_price' => $total_price]);
+        return view('admin.order.detail', compact('order', 'status', 'deliverer', 'order_details', 'total_price'));
+    }
+
+    public function addOrderDetail($id)
+    {
+        $listProducts = Product::all();
+        $products = $listProducts->pluck('name_phone', 'id')->all();
+        return view('admin.order.add_order_detail', compact('products', 'id'));
+    }
+
+    public function setPrice(Request $request)
+    {
+        $product_id = $request->product_id;
+        if ($product_id == null) {
+            $price = 0;
+        } else {
+            $today = Carbon::now();
+            $start_promotion = DB::table('products')->where('id', '=', $product_id)->select('start_promotion')->get()[0];
+            $end_promotion = DB::table('products')->where('id', '=', $product_id)->select('end_promotion')->get()[0];
+            $start = (array)$start_promotion;
+            $end = (array)$end_promotion;
+            if ($today >= $start['start_promotion'] && $today <= $end['end_promotion']) {
+                $price = DB::table('products')->where('id', '=', $product_id)->select('promotion_price')->get()[0];
+            } else {
+                $price = DB::table('products')->where('id', '=', $product_id)->select('price')->get()[0];
+            }
+        }
+        return Response::json($price);
+    }
+
+    public function addOrderDetailAction(OrderDetailRequest $request, $id)
+    {
+        $order_detail = $this->order_detail->create($request->all());
+        return Response::json($order_detail);
+    }
+
+    public function deleteProductFromCart($id)
+    {
+        $this->order_detail->delete($id);
+        return redirect()->back();
+    }
+
+    public function updateViewOrderDetail($id)
+    {
+        $listProducts = Product::all();
+        $products = $listProducts->pluck('name_phone', 'id')->all();
+        $order_detail = $this->order_detail->find($id);
+        return view('admin.order.update_order_detail', compact('products', 'order_detail', 'id'));
+    }
+
+    public function updateOrderDetail(OrderDetailRequest $request, $id)
+    {
+        $order_details = DB::table('order_details')
+            ->where('id', $id)
+            ->update(['product_id' => $request->product_id, 'sale_quantity' => $request->sale_quantity, 'price' => $request->price]);
+        return Response::json($order_details);
+    }
+
+    public function exportPDF($id)
+    {
+        $order = $this->order->find($id);
+        $deliverer = $this->order->with(['deliverer'])->where('orders.id', '=', $id)
+            ->join('deliverer', 'orders.deliverer_id', '=', 'deliverer.id')
+            ->select('deliverer.*')
+            ->get()[0];
+        $status = $this->order->with(['status'])->where('orders.id', '=', $id)
+            ->join('status', 'orders.status_id', '=', 'status.id')
+            ->select('status.*')
+            ->get()[0];
+        $order_details = $this->order->with(['orderDetail'])
+            ->join('order_details', 'order_details.order_id', '=', 'orders.id')
+            ->join('products', 'order_details.product_id', '=', 'products.id')
+            ->where('order_details.deleted_at', null)
+            ->where('order_details.order_id', '=', $id)
+            ->select('order_details.*', 'products.name_phone')->get();
+        $total_price = 0;
+        foreach ($order_details as $order_detail) {
+            $total_price = $total_price + ($order_detail->price) * ($order_detail->sale_quantity);
+        }
+        $pdf = PDF::loadView('admin.order.detail', compact('order', 'deliverer', 'status', 'order_details', 'total_price'));
+        return $pdf->download('order.pdf');
     }
 }

@@ -24,6 +24,7 @@
                         <div class="col-sm-12">
                             <input type="file" class=" form-control btn btn-info btn-sm waves-effect waves-light "
                                    id="image" name="image" value="" required="">
+                            <img src="images/{{$image->image}}" style="width: 100px">
                             <input type="hidden" value="" id="image" name="image">
                             <span class="text-danger">
                                 <strong id="image-error"></strong>

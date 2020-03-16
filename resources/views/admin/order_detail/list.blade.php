@@ -33,7 +33,7 @@
                         <th>Ordering code</th>
                         <th>Product</th>
                         <th>Sale Quantity</th>
-                        <th>Price</th>
+                        <th>Price (VND)</th>
                         <th>Date Created</th>
                         <th>Date Updated</th>
                         @can('order_detail-edit','order_detail-delete')
@@ -49,7 +49,7 @@
                                 <td id="order_id_{{$order_detail->id}}">{{$order_detail->order_id}}</td>
                                 <td id="product_id_{{$order_detail->id}}">{{isset($order_detail->product_id)?$order_detail->product->name_phone:''}}</td>
                                 <td id="sale_quantity_{{$order_detail->id}}">{{$order_detail->sale_quantity}}</td>
-                                <td id="price_{{$order_detail->id}}">{{$order_detail->price}}</td>
+                                <td id="price_{{$order_detail->id}}">{{number_format($order_detail->price)}}</td>
                                 <td id="created_at_{{$order_detail->id}}">{{$order_detail->created_at->format('d/m/Y')}}</td>
                                 <td id="updated_at_{{$order_detail->id}}">{{$order_detail->updated_at->format('d/m/Y')}}</td>
                                 @can('order_detail-edit')

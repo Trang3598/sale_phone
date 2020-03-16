@@ -31,7 +31,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token','confirm'
+        'password', 'remember_token', 'confirm'
     ];
 
     /**
@@ -60,8 +60,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function sendPasswordResetNotification($token)
     {
-        // Your your own implementation.
         $this->notify(new ResetPassword($token));
     }
 
+    public function chat()
+    {
+        return $this->hasMany(Chat::class);
+    }
 }

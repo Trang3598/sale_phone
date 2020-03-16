@@ -22,7 +22,7 @@ class CreateOrdersTable extends Migration
             $table->foreign('status_id')->references('id')->on('status')->onDelete('cascade')->onUpdate('no action');
             $table->bigInteger('deliverer_id')->unsigned();
             $table->foreign('deliverer_id')->references('id')->on('deliverer')->onDelete('cascade')->onUpdate('no action');
-            $table->integer('total_price');
+            $table->bigInteger('total_price');
             $table->string('delivery_address',190);
             $table->string('note',190)->nullable();
             $table->timestamps();

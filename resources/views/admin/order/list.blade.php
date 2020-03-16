@@ -53,31 +53,42 @@
                                 <td id="customer_email_{{$order->id}}">{{$order->customer_email}}</td>
                                 <td id="status_id_{{$order->id}}">{{isset($order->status)? $order->status->status_name:''}}</td>
                                 <td id="deliverer_id_{{$order->id}}">{{isset($order->deliverer)? $order->deliverer->deliverer_name:''}}</td>
-                                <td id="total_price_{{$order->id}}">{{$order->total_price}}</td>
+                                <td id="total_price_{{$order->id}}">{{number_format($order->total_price)}}</td>
                                 <td id="delivery_address_{{$order->id}}">{{$order->delivery_address}}</td>
                                 <td id="note_{{$order->id}}">{{$order->note}}</td>
                                 <td id="created_at_{{$order->id}}">{{$order->created_at->format('d/m/Y')}}</td>
                                 <td id="updated_at_{{$order->id}}">{{$order->updated_at->format('d/m/Y')}}</td>
                                 <td>
-                                    <a href="javascript:void(0)" id="detail-order"
-                                       data-id="{{$order->id}}"
-                                       class="btn btn-warning detail-order">Detail</a>
-                                </td>
-                                @can('order-edit')
-                                    <td>
-                                        <div class="btn-edit">
-                                            <a href="javascript:void(0)" class="edit-order btn btn-success"
-                                               data-id="{{$order->id}}">Update</a>
-                                        </div>
-                                    </td>
-                                @endcan
-                                @can('order-delete')
-                                    <td>
-                                        <a href="javascript:void(0)" id="delete-order"
+                                    <a href="javascript:void(0)" id="add-detail-order"
+                                       class="btn btn-primary add-detail-order" data-id="{{$order->id}}"><span
+                                            class="mdi mdi-plus" aria-hidden="true"></span>
+                                        <span><strong>Order Detail</strong></span>
+
+                                        <a href="javascript:void(0)" id="detail-order"
                                            data-id="{{$order->id}}"
-                                           class="btn btn-danger delete-order">Delete</a>
-                                    </td>
-                                @endcan
+                                           class="btn btn-warning detail-order a-btn-slide-text">
+                                            <span class="mdi mdi-book" aria-hidden="true"></span>
+                                            <span><strong>Detail</strong></span>
+                                        </a>
+                                </td>
+                                <td>
+                                    @can('order-edit')
+                                        <a href="javascript:void(0)"
+                                           class="edit-order btn btn-success a-btn-slide-text"
+                                           data-id="{{$order->id}}">
+                                            <span class="mdi mdi-update" aria-hidden="true"></span>
+                                            <span><strong>Update</strong></span>
+                                        </a>
+                                    @endcan
+                                    @can('order-delete')
+                                        <a href="javascript:void(0)"
+                                           class="btn btn-danger a-btn-slide-text delete-order" id="delete-order"
+                                           data-id="{{$order->id}}">
+                                            <span class="mdi mdi-delete" aria-hidden="true"></span>
+                                            <span><strong>Delete</strong></span>
+                                        </a>
+                                    @endcan
+                                </td>
                             </tr>
                         @endforeach
                     @endif
@@ -126,7 +137,7 @@
                         });
                         $(document).on('click', '.detail-order', function () {
                             var order_id = $(this).data('id');
-                            $.get('order/' + order_id + '/detail', function (data) {
+                            $.get('admin/order/detail/' + order_id, function (data) {
                                 $("#order").html(data);
                                 $('#userCrudModal').html("Detail Order");
                                 $('#btn-save').val("detail-order");
@@ -240,6 +251,37 @@
                                         }
                                         $('#btn-save').html('Save Changes');
                                     }
+                                }
+                            });
+                        }
+                    });
+                    $(document).on('click', '#add_order_detail', function (event) {
+                        event.preventDefault();
+                        var order_id = $(this).data('id');
+                        var form_data = new FormData($('#add_order_detail_form')[0]);
+                        form_data.append('_method', 'post');
+                        if ($("#add_order_detail_form").length > 0) {
+                            var actionType = $('#btn-save').val();
+                            $('#btn-save').html('Sending..');
+                            $.ajax({
+                                data: form_data,
+                                url: 'admin/order/add_order_detail_action/' + order_id,
+                                type: "POST",
+                                contentType: false,
+                                processData: false,
+                                success: function (data) {
+                                    $('#ajax-crud-modal').modal('hide');
+                                    $('#add_order_detail_form').trigger("reset");
+                                    $('#btn-save').html('Save Changes');
+                                    $('#showmess').html('Add successfully').css({'display': 'block'});
+                                },
+                                error: function (data) {
+                                    if (data.responseJSON.errors) {
+                                        $('#product_id-error').html(data.responseJSON.errors.product_id);
+                                        $('#sale_quantity-error').html(data.responseJSON.errors.sale_quantity);
+                                        $('#price-error').html(data.responseJSON.errors.price);
+                                    }
+                                    $('#add_order_detail').html('Save Changes');
                                 }
                             });
                         }

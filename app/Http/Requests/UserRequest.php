@@ -31,9 +31,6 @@ class UserRequest extends FormRequest
             'password' => 'required|min:5|required_with:confirm|same:confirm|alpha_num',
             'confirm' => 'required|min:5|same:password|alpha_num',
             'avatar' => 'image|max:2000|unique:users,avatar',
-            'current_password' => 'required|min:5',
-            'new_password' => 'required|same:confirm_new_pw|min:5|different:current_password',
-            'confirm_new_pw' => 'required|min:5|same:new_password|alpha_num',
         ];
         if ($this->user) {
             $arr_validate['username'] = 'required|min:5|max:50|regex:/(^([a-zA-Z]+)(\d+)?$)/u|alpha_dash|string|unique:users,username,' . $this->user;

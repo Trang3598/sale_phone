@@ -39,7 +39,7 @@ $(document).ready(function () {
             contentType: false,
             processData: false,
             success: function (res) {
-                $('#showmess').html('Update account successfully').css({'display': 'block'});
+                $('#showmess').html('Update account successfully').attr('class', 'alert alert-success').css({'display': 'block'});
             },
             error: function (data) {
                 $('#showmess').html(data.responseJSON.message).attr('class', 'alert alert-danger').css({'display': 'block'});

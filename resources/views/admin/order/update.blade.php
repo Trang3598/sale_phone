@@ -62,7 +62,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-12">Total Price</label>
+                        <label class="col-sm-12">Total Price(VND)</label>
                         <div class="col-sm-12">
                             <input type="number" class="form-control" id="total_price" name="total_price"
                                    placeholder="Enter total price"

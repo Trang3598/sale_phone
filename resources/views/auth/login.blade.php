@@ -73,18 +73,17 @@
                                 <div class='col-md-8 offset-md-4' style="margin-top: 20px">
                                     <span>Or Sign Up Using</span>
                                 </div>
-{{--                                <div class='col-md-8 offset-md-4 d-flex'>--}}
-{{--                                    <a href="" class="login100-social-item ">--}}
-{{--                                        <i class="fab fa-facebook-square"></i>--}}
-{{--                                    </a>--}}
-{{--                                    <a href="{{ url('login/twitter') }}" class="login100-social-item bg2">--}}
-{{--                                        <i class="fa fa-twitter-square"--}}
-{{--                                           style="color: deepskyblue; font-size: 40px;"></i>--}}
-{{--                                    </a>--}}
-{{--                                    <a href="{{ url('login/google') }}" class="login100-social-item bg3">--}}
-{{--                                        <i class="fa fa-google-plus-square" style="color: red; font-size: 40px;"></i>--}}
-{{--                                    </a>--}}
-{{--                                </div>--}}
+                                <div class='col-md-8 offset-md-4 d-flex'>
+                                    <a href="" class="login100-social-item ">
+                                        <i class="fa fa-facebook-square">Facebook</i>
+                                    </a>
+                                    <a href="{{ url('login/twitter') }}" class="login100-social-item bg2">
+                                        <i class="">Github</i>
+                                    </a>
+                                    <a href="{{ url('login/google') }}" class="login100-social-item bg3">
+                                        <i class="fa fa-google-plus-square">Google</i>
+                                    </a>
+                                </div>
                             </div>
                         </form>
                     </div>

@@ -134,6 +134,7 @@
                                     $('#showmess').html('Add successfully').css({'display': 'block'});
                                 },
                                 error: function (data) {
+                                    console.log(data.responseJSON.errors);
                                     if (data.responseJSON.errors) {
                                         if (data.responseJSON.errors) {
                                             $('#deliverer_name-error').html(data.responseJSON.errors.deliverer_name);
