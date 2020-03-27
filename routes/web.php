@@ -19,7 +19,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::resource('comment', 'CommentController');
     Route::resource('sale_phone', 'SalePhoneController');
     Route::resource('role', 'RoleController');
-    Route::resource('dashboard', 'DashboardController');
+    Route::resource('c', 'DashboardController');
     Route::get('image/{image}/showImage', 'ImageController@showImage')->name('image.showImage');
     Route::get('export', 'ProductController@export')->name('product.export');
     //delete route
@@ -38,21 +38,21 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
 
 });
 //search route
-Route::get('category/search', 'CategoryController@search')->name('category.search')->middleware('auth');;
-Route::get('product/search', 'ProductController@search')->name('product.search')->middleware('auth');;
-Route::get('image/search', 'ImageController@search')->name('image.search')->middleware('auth');;
-Route::get('order/search', 'OrderController@search')->name('order.search')->middleware('auth');;
-Route::get('order_detail/search', 'OrderDetailController@search')->name('order_detail.search')->middleware('auth');;
-Route::get('color/search', 'ColorController@search')->name('color.search')->middleware('auth');;
-Route::get('user/search', 'UserController@search')->name('user.search')->middleware('auth');;
-Route::get('sale_phone/search', 'SalePhoneController@search')->name('sale_phone.search')->middleware('auth');;
-Route::get('status/search', 'StatusController@search')->name('status.search')->middleware('auth');;
-Route::get('deliverer/search', 'DelivererController@search')->name('deliverer.search')->middleware('auth');;
-Route::get('comment/search', 'CommentController@search')->name('comment.search')->middleware('auth');;
+Route::get('category/search', 'CategoryController@search')->name('category.search')->middleware('auth');
+Route::get('product/search', 'ProductController@search')->name('product.search')->middleware('auth');
+Route::get('image/search', 'ImageController@search')->name('image.search')->middleware('auth');
+Route::get('order/search', 'OrderController@search')->name('order.search')->middleware('auth');
+Route::get('order_detail/search', 'OrderDetailController@search')->name('order_detail.search')->middleware('auth');
+Route::get('color/search', 'ColorController@search')->name('color.search')->middleware('auth');
+Route::get('user/search', 'UserController@search')->name('user.search')->middleware('auth');
+Route::get('sale_phone/search', 'SalePhoneController@search')->name('sale_phone.search')->middleware('auth');
+Route::get('status/search', 'StatusController@search')->name('status.search')->middleware('auth');
+Route::get('deliverer/search', 'DelivererController@search')->name('deliverer.search')->middleware('auth');
+Route::get('comment/search', 'CommentController@search')->name('comment.search')->middleware('auth');
 //see detailed image
-Route::get('product/image/{product}', 'ProductController@showImage')->name('product.image')->middleware('auth');;
+Route::get('product/image/{product}', 'ProductController@showImage')->name('product.image')->middleware('auth');
 Auth::routes(['verify' => true]);
-Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');;
+Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 Route::get('/permission', function () {
     return view('admin.error.403');
 })->name('error.permission');
@@ -66,7 +66,7 @@ Route::get('admin/order/delete_product_from_cart/{id}', 'OrderController@deleteP
 Route::get('admin/order/update_view_order_detail/{id}', 'OrderController@updateViewOrderDetail')->name('update_view_order_detail')->middleware('auth');
 Route::post('admin/order/update_order_detail/{id}', 'OrderController@updateOrderDetail')->name('update_order_detail')->middleware('auth');
 Route::get('pdf/{id}', 'OrderController@exportPDF')->name('export_pdf')->middleware('auth');
-Auth::routes();
+Auth::routes(['except' => 'home.index']);
 
 Route::prefix('chat')->name('client.chat.')->group(function () {
     Route::get('', 'Client\ChatController@index')->name('index')->middleware('auth');
@@ -77,3 +77,16 @@ Route::middleware('auth')->prefix('admin-chat')->name('admin.chat.')->group(func
     Route::get('', 'Admin\ChatController@index')->name('index')->middleware('auth');
     Route::post('/submit', 'Admin\ChatController@submit')->name('submit')->middleware('auth');
 });
+Route::get('callback/{provider}', 'Auth\LoginController@handleProviderCallback');
+Route::get('login/{provider}', 'Auth\LoginController@redirect');
+
+
+Route::group(['prefix' => 'client'], function () {
+    Route::get('home', 'Client\HomeController@index')->name('home.index');
+    Route::get('detail/{id}', 'Client\HomeController@getDetail')->name('product.detail');
+    Route::get('category/product/{id}', 'Client\HomeController@getProduct')->name('category.product');
+    Route::get('send-infor', 'Client\HomeController@sendInfor')->name('send.infor');
+    Route::post('send', 'Client\HomeController@send')->name('send');
+    Route::post('send-comment/{id}', 'Client\HomeController@sendCommentAndImageFeedback')->name('send.comment');
+});
+

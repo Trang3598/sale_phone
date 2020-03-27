@@ -22,22 +22,13 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-12">Username</label>
+                        <label class="col-sm-12">Product</label>
                         <div class="col-sm-12">
                             @if(isset($products))
                                 {!! Form::select('product_id', ['' => 'Enter the product bought...'] + $products,$comment->product_id,['class'=> 'form-control']) !!}
                             @endif
                             <span class="text-danger">
                                 <strong id="product_id-error"></strong>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-12">Comment Time</label>
-                        <div class="col-sm-12">
-                            {!! Form::date('comment_time',$comment->comment_time,['class'=>'form-control','id'=>'comment_time']) !!}
-                            <span class="text-danger">
-                                <strong id="comment_time-error"></strong>
                             </span>
                         </div>
                     </div>

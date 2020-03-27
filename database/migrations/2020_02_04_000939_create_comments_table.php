@@ -19,9 +19,7 @@ class CreateCommentsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('no action');
             $table->bigInteger('product_id')->unsigned()->nullable();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('no action');
-            $table->dateTime('comment_time');
             $table->string('comment_content',190);
-            $table->string('phone_number',190);
             $table->timestamps();
             $table->softDeletes();
         });

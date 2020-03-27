@@ -24,4 +24,6 @@ interface  AbstractRepositoryInterface
     public function getModel();
 
     public function setModel($model);
+
+    public function findThrough($fieldName, $param);
 }

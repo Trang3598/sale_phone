@@ -18,11 +18,14 @@ class CreateUsersTable extends Migration
             $table->string('username',50);
             $table->string('full_name',190);
             $table->string('email',100)->unique();
+            $table->string('phone_number',50)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password',100);
             $table->string('confirm',100);
             $table->string('avatar',190)->nullable();
             $table->rememberToken();
+            $table->string('provider',190)->nullable();
+            $table->string('provider_id',190)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

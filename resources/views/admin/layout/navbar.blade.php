@@ -127,9 +127,11 @@
                         class="ti-user m-r-5 m-l-5"></i> {{$user_login->username}}</a>
                 <a class="dropdown-item" href="javascript:void(0)"><i class="ti-email m-r-5 m-l-5"></i> Inbox</a>
                 <div class="dropdown-divider"></div>
+                @can('user-account')
                 <a class="dropdown-item" href="{{route('user.account')}}"><i class="ti-settings m-r-5 m-l-5"></i>
                     Account
                     Setting</a>
+                @endcan
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{route('login')}}"><i class="fa fa-power-off m-r-5 m-l-5"></i>
                     Logout</a>

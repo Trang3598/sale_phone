@@ -32,7 +32,6 @@
                         <th>ID</th>
                         <th>User</th>
                         <th>Products</th>
-                        <th>Comment Time</th>
                         <th>Comment Content</th>
                         <th>Phone Number</th>
                         <th>Date Created</th>
@@ -49,7 +48,6 @@
                                 <td id="id_{{$comment->id}}">{{$comment->id}}</td>
                                 <td id="user_id_{{$comment->id}}">{{isset($comment->user_id)? $comment->user->username:'VISITOR'}}</td>
                                 <td id="product_id_{{$comment->id}}">{{isset($comment->product_id)? $comment->product->name_phone:''}}</td>
-                                <td id="comment_time_{{$comment->id}}">{{$comment->comment_time->format('d/m/Y')}}</td>
                                 <td id="comment_content_{{$comment->id}}">{{$comment->comment_content}}</td>
                                 <td id="phone_number_{{$comment->id}}">{{$comment->phone_number}}</td>
                                 <td id="created_at_{{$comment->id}}">{{$comment->created_at->format('d/m/Y')}}</td>
@@ -130,7 +128,7 @@
                                 contentType: false,
                                 processData: false,
                                 success: function (data) {
-                                    var dataItem = '<tr id="id_' + data.id + '"><td>' + data.id + '</td><td>' + data.user_id + '</td><td>' + data.product_id + '</td><td>' + data.comment_time + '</td><td>' + data.comment_content + '</td><td>' + data.phone_number + '</td><td>' + data.created_at + '</td><td>' + data.updated_at + '</td>';
+                                    var dataItem = '<tr id="id_' + data.id + '"><td>' + data.id + '</td><td>' + data.user_id + '</td><td>' + data.product_id + '</td><td>' + data.comment_content + '</td><td>' + data.phone_number + '</td><td>' + data.created_at + '</td><td>' + data.updated_at + '</td>';
                                     dataItem += '<td><a href="javascript:void(0)" id="edit-comment" data-id="' + data.id + '" class="btn btn-success mr-2">Update</a></td>';
                                     dataItem += '<td><a href="javascript:void(0)" id="delete-comment" data-id="' + data.id + '" class="btn btn-danger delete-user ml-1">Delete</a></td></tr>';
                                     $('#listItem').append(dataItem);
@@ -144,7 +142,6 @@
                                         if (data.responseJSON.errors) {
                                             $('#user_id-error').html(data.responseJSON.errors.user_id);
                                             $('#product_id-error').html(data.responseJSON.errors.product_id);
-                                            $('#comment_time-error').html(data.responseJSON.errors.comment_time);
                                             $('#comment_content-error').html(data.responseJSON.errors.comment_content);
                                             $('#phone_number-error').html(data.responseJSON.errors.phone_number);
                                             $('#created_at-error').html(data.responseJSON.errors.created_at);
@@ -172,7 +169,6 @@
                                 success: function (data) {
                                     $("#user_id_" + data.id).html(data.user_id);
                                     $("#product_id_" + data.id).html(data.product_id);
-                                    $("#comment_time_" + data.id).html(data.comment_time);
                                     $("#comment_content_" + data.id).html(data.comment_content);
                                     $("#phone_number_" + data.id).html(data.phone_number);
                                     $("#created_at_" + data.id).html(data.created_at);
@@ -189,9 +185,6 @@
                                         }
                                         if (data.responseJSON.errors.product_id) {
                                             $('#product_id-error').html(data.responseJSON.errors.product_id);
-                                        }
-                                        if (data.responseJSON.errors.comment_time) {
-                                            $('#comment_time-error').html(data.responseJSON.errors.comment_time);
                                         }
                                         if (data.responseJSON.errors.phone_number) {
                                             $('#phone_number-error').html(data.responseJSON.errors.phone_number);

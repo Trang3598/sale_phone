@@ -60,7 +60,7 @@ class PermissionTableSeeder extends Seeder
             'status-create',
             'status-edit',
             'status-delete',
-
+            'user-account'
         ];
 
 

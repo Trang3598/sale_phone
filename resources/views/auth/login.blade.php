@@ -6,11 +6,9 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">{{ __('Login') }}</div>
-
                     <div class="card-body">
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
-
                             <div class="form-group row">
                                 <label for="email"
                                        class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
@@ -73,16 +71,25 @@
                                 <div class='col-md-8 offset-md-4' style="margin-top: 20px">
                                     <span>Or Sign Up Using</span>
                                 </div>
-                                <div class='col-md-8 offset-md-4 d-flex'>
-                                    <a href="" class="login100-social-item ">
-                                        <i class="fa fa-facebook-square">Facebook</i>
-                                    </a>
-                                    <a href="{{ url('login/twitter') }}" class="login100-social-item bg2">
-                                        <i class="">Github</i>
-                                    </a>
-                                    <a href="{{ url('login/google') }}" class="login100-social-item bg3">
-                                        <i class="fa fa-google-plus-square">Google</i>
-                                    </a>
+                                <div class='col-md-8 offset-md-4'>
+                                    <div style="display: block">
+                                        <a class="btn btn-facebook" href="{{ url('login/facebook') }}">
+                                            <i class="fa fa-facebook-square" aria-hidden="true"></i> Đăng nhập bằng
+                                            Facebook
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a class="btn btn-github" href="{{ url('login/github') }}">
+                                            <i class="fa fa-github-official" aria-hidden="true"></i> Đăng nhập bằng
+                                            Github
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a class="btn btn-googleplus" href="{{ url('login/google') }}">
+                                            <i class="fa fa-github-official" aria-hidden="true"></i> Đăng nhập bằng
+                                            Google
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </form>

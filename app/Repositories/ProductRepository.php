@@ -28,4 +28,10 @@ class ProductRepository extends Repository
         }
         return $products;
     }
+
+    public function listNewProduct($param)
+    {
+        $products = $this->model->orderBy($param, 'desc')->paginate(12);
+        return $products;
+    }
 }

@@ -21,8 +21,8 @@ class ProductController extends Controller
         parent::__construct();
         $this->product = new ProductRepository($product);
         $this->middleware('permission:product-list');
-        $this->middleware('permission:product-create', ['only' => ['create','store']]);
-        $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:product-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:product-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:product-delete', ['only' => ['destroy']]);
     }
 
@@ -43,7 +43,14 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request)
     {
-        $products = $this->product->create($request->all());
+        $data = $request->all();
+        if ($request->hasFile('thumbnail')) {
+            $file = $request->thumbnail;
+            $thumbnail = time() . $file->getClientOriginalName();
+            $file->move('images', $thumbnail);
+            $data['thumbnail'] = $thumbnail;
+        }
+        $products = $this->product->create($data);
         return Response::json($products);
     }
 
@@ -63,7 +70,14 @@ class ProductController extends Controller
 
     public function update($id, ProductRequest $request)
     {
-        $products = $this->product->update($id, $request->all());
+        $data = $request->all();
+        if ($request->hasFile('thumbnail')) {
+            $file = $request->thumbnail;
+            $thumbnail = time() . $file->getClientOriginalName();
+            $file->move('images', $thumbnail);
+            $data['thumbnail'] = $thumbnail;
+        }
+        $products = $this->product->update($id, $data);
         return Response::json($products);
     }
 

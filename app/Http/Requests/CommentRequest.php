@@ -25,7 +25,6 @@ class CommentRequest extends FormRequest
     {
         $arr_validate = [
             'product_id' => 'required',
-            'comment_time' => 'required|date|before:tomorrow',
             'comment_content' => 'required|min:5|string|max:255',
             'phone_number' => 'required|numeric|digits_between:1,10',
         ];

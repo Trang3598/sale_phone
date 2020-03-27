@@ -111,6 +111,7 @@ $(document).ready(function () {
         if ($("#update_order_detail_form").length > 0) {
             var actionType = $('#update_order_detail').val();
             $('#update_order_detail').html('Sending...');
+            $('#ajax-crud-modal').modal('hide');
             $.ajax({
                 data: form_data,
                 url: $('#update_order_detail_form').attr('action'),
@@ -118,7 +119,7 @@ $(document).ready(function () {
                 contentType: false,
                 processData: false,
                 success: function (data) {
-                    $('#ajax-crud-modal').modal('hide');
+
                     $('#update_order_detail_form').trigger("reset");
                     $('#update_order_detail').html('Save Changes');
                     $('#showmess').html('Edit successfully').css({'display': 'block'});

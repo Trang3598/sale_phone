@@ -33,15 +33,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-12">Comment Time</label>
-                        <div class="col-sm-12">
-                            <input type="date" class="form-control" id="comment_time" name="comment_time">
-                            <span class="text-danger">
-                                <strong id="comment_time-error"></strong>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-12">Comment Content</label>
                         <div class="col-sm-12">
                             <input type="text" class="form-control" id="comment_content" name="comment_content">

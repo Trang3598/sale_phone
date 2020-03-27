@@ -9,7 +9,7 @@ class Product extends Model
 {
     use SoftDeletes;
     protected $table = "products";
-    protected $fillable = ['id_cate', 'name_phone', 'title', 'description', 'quantity', 'detail', 'price', 'size', 'memory', 'weight', 'cpu_speed', 'ram', 'os', 'camera_primary', 'battery', 'bluetooth', 'wlan', 'warranty','promotion_price', 'start_promotion', 'end_promotion', 'sale_phone', 'created_at', 'updated_at'];
+    protected $fillable = ['id_cate', 'name_phone', 'title', 'description', 'quantity', 'detail', 'price', 'size', 'memory', 'weight', 'cpu_speed', 'ram', 'os', 'camera_primary', 'battery', 'bluetooth', 'wlan', 'warranty','promotion_price', 'start_promotion', 'end_promotion', 'sale_phone', 'created_at', 'updated_at','thumbnail'];
     protected $dates = ['created_at', 'updated_at', 'start_promotion', 'end_promotion', 'deleted_at'];
 
     public function category()
@@ -35,5 +35,10 @@ class Product extends Model
     public function image()
     {
         return $this->hasMany('App\Image');
+    }
+
+    public function color()
+    {
+        return $this->hasMany('App\Color');
     }
 }

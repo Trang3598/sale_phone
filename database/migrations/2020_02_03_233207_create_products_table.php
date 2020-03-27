@@ -17,6 +17,7 @@ class CreateProductsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('id_cate')->unsigned();
             $table->foreign('id_cate')->references('id')->on('categories')->onDelete('restrict')->onUpdate('no action');
+            $table->string('thumbnail', 190);
             $table->string('name_phone', 50);
             $table->string('title', 190)->nullable();
             $table->string('description', 190)->nullable();

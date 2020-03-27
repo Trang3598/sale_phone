@@ -21,7 +21,7 @@ class Repository implements AbstractRepositoryInterface
     // Get all instances of model
     public function all($param)
     {
-        $result =  $this->model->newQuery();
+        $result = $this->model->newQuery();
         return $result->paginate($param);
     }
 
@@ -70,7 +70,7 @@ class Repository implements AbstractRepositoryInterface
     }
 
     // Eager load database relationships
-    public function with( array $relations)
+    public function with(array $relations)
     {
         return $this->model->with($relations);
     }
@@ -88,4 +88,9 @@ class Repository implements AbstractRepositoryInterface
         return $result;
     }
 
+    public function findThrough($fieldName, $param)
+    {
+        $result = $this->model->where($fieldName, $param)->paginate(12);
+        return $result;
+    }
 }

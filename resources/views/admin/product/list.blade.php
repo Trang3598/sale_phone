@@ -61,12 +61,12 @@
                 <tr class="text-center">
                     <th>ID</th>
                     <th>Category Name</th>
+                    <th>Thumbnail</th>
                     <th>Phone Name</th>
                     <th>Quantity</th>
                     <th>Price(VND)</th>
                     <th>Sale Phone Status</th>
                     <th>Date Created</th>
-                    <th>Date Updated</th>
                     <th colspan="3">Action</th>
                 </tr>
                 </thead>
@@ -76,12 +76,15 @@
                         <tr id="id_{{ $product->id }}">
                             <td id="product_id_{{$product->id}}">{{$product->id}}</td>
                             <td id="id_cate_{{$product->id}}">{{(isset($product->category->category_name)) ?$product->category->category_name:''}}</td>
+                            <td id="thumbnail_{{$product->id}}"><img id="thumbnail_{{$product->id}}"
+                                                                     src="images/{{$product->thumbnail}}" alt=""
+                                                                     style="height:50px;width: 50px"
+                                                                     class="img-responsive"/></td>
                             <td id="name_phone_{{$product->id}}">{{$product->name_phone}}</td>
                             <td id="quantity_{{$product->id}}">{{$product->quantity}}</td>
                             <td id="price_{{$product->id}}">{{number_format($product->price)}}</td>
                             <td id="sale_phone_{{$product->id}}">{{$product->sale_phone == 1 ? "Best Seller" : "Unmarketable"}}</td>
                             <td id="created_at_{{$product->id}}">{{isset($product->created_at)?$product->created_at->format('d/m/Y'):''}}</td>
-                            <td id="updated_at_{{$product->id}}">{{isset($product->updated_at)?$product->updated_at->format('d/m/Y'):''}}</td>
                             <td>
                                 <a href="javascript:void(0)" id="image-product"
                                    data-id="{{$product->id}}"
@@ -176,11 +179,11 @@
                             contentType: false,
                             processData: false,
                             success: function (data) {
-                                var dataItem = '<tr id="id_' + data.id + '"><td id = "product_id_">' + data.id + '</td><td id="id_cate_">' + data.id_cate + '</td><td id="name_phone_">' + data.name_phone + '</td><td id="quantity_">' + data.quantity +
+                                var dataItem = '<tr id="id_' + data.id + '"><td id = "product_id_">' + data.id + '</td><td id="id_cate_">' + data.id_cate + '</td><td id="thumbnail_' + data.id + '"><img src = "images/' + data.thumbnail + '" alt ="" style="height:50px;width: 50px" class="img-responsive" />' + '</td><td id="name_phone_">' + data.name_phone + '</td><td id="quantity_">' + data.quantity +
                                     '</td><td id="price_">' + data.price + '</td><td id = "sale_phone_">' + data.sale_phone + '</td><td id = "created_at_">' + data.created_at
-                                    + '</td><td id = "updated_at_">' + data.updated_at + '</td>';
+                                    + '</td>';
                                 dataItem += '<td><a href="javascript:void(0)" id="image-product" data-id="' + data.id + '" class="image-product btn btn-primary">Watch</a></td>';
-                                dataItem += '<td><a href="javascript:void(0)" id="edit-product" data-id="' + data.id + '" class="btn btn-success mr-2">Update</a></td>';
+                                dataItem += '<td><a href="javascript:void(0)" id="edit-product" data-id="' + data.id + '" class="btn btn-success mr-2 edit-product">Update</a></td>';
                                 dataItem += '<td><a href="javascript:void(0)" id="delete-product" data-id="' + data.id + '" class="btn btn-danger delete-user ml-1">Delete</a></td></tr>';
                                 $('#listItem').append(dataItem);
                                 $('#ajax-crud-modal').modal('hide');
@@ -191,6 +194,7 @@
                             error: function (data) {
                                 if (data.responseJSON.errors) {
                                     $('#id_cate-error').html(data.responseJSON.errors.id_cate);
+                                    $('#thumbnail-error').html(data.responseJSON.errors.thumbnail);
                                     $('#name_phone-error').html(data.responseJSON.errors.name_phone);
                                     $('#title-error').html(data.responseJSON.errors.title);
                                     $('#description-error').html(data.responseJSON.errors.description);
@@ -236,6 +240,7 @@
                                 success: function (data) {
                                     $("#id_cate_" + data.id).html(data.id_cate);
                                     $("#name_phone_" + data.id).html(data.name_phone);
+                                    $("#thumbnail_" + data.id).attr('src', 'images/' + data.thumbnail);
                                     $("#title_" + data.id).html(data.title);
                                     $("#description_" + data.id).html(data.description);
                                     $("#quantity_" + data.id).html(data.quantity);
@@ -269,6 +274,9 @@
                                     }
                                     if (data.responseJSON.errors.name_phone) {
                                         $('#name_phone-error').html(data.responseJSON.errors.name_phone);
+                                    }
+                                    if (data.responseJSON.errors.thumbnail) {
+                                        $('#thumbnail-error').html(data.responseJSON.errors.thumbnail);
                                     }
                                     if (data.responseJSON.errors.title) {
                                         $('#title-error').html(data.responseJSON.errors.title);

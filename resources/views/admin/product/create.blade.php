@@ -31,6 +31,16 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-12">Thumbnail</label>
+                        <div class="col-sm-12">
+                            <input type="file" class=" form-control btn btn-info btn-sm waves-effect waves-light "
+                                   id="thumbnail" name="thumbnail" multiple="multiple">
+                            <span class="text-danger">
+                                <strong id="thumbnail-error"></strong>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-12">Title</label>
                         <div class="col-sm-12">
                             <input type="text" class="form-control" id="title" name="title"
