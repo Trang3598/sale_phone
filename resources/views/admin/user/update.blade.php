@@ -58,6 +58,17 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-12">Phone Number</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="phone_number" name="phone_number"
+                                   placeholder="Enter phone number"
+                                   value="{{$user->phone_number}}" maxlength="50" required="">
+                            <span class="text-danger">
+                                <strong id="phone_number-error"></strong>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-12">Password</label>
                         <div class="col-sm-12">
                             <input type="password" class="form-control" id="password" name="password"
@@ -83,24 +94,6 @@
                             {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control','multiple')) !!}
                             <span class="text-danger">
                                 <strong id="role-error"></strong>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-12">Date Created</label>
-                        <div class="col-sm-12">
-                            {!! Form::date('created_at',$user->created_at,['class'=>'form-control','id'=>'created_at']) !!}
-                            <span class="text-danger">
-                                <strong id="created_at-error"></strong>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-12">Date Updated</label>
-                        <div class="col-sm-12">
-                            {!! Form::date('updated_at',$user->updated_at,['class'=>'form-control','id'=>'updated_at']) !!}
-                            <span class="text-danger">
-                                <strong id="updated_at-error"></strong>
                             </span>
                         </div>
                     </div>

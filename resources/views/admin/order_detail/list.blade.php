@@ -32,6 +32,7 @@
                         <th>ID</th>
                         <th>Ordering code</th>
                         <th>Product</th>
+                        <th>Color</th>
                         <th>Sale Quantity</th>
                         <th>Price (VND)</th>
                         <th>Date Created</th>
@@ -48,6 +49,7 @@
                                 <td id="order_detail_id_{{$order_detail->id}}">{{$order_detail->id}}</td>
                                 <td id="order_id_{{$order_detail->id}}">{{$order_detail->order_id}}</td>
                                 <td id="product_id_{{$order_detail->id}}">{{isset($order_detail->product_id)?$order_detail->product->name_phone:''}}</td>
+                                <td id="color_{{$order_detail->id}}">{{isset($order_detail->color_id)?$order_detail->color->color_name : ''}}</td>
                                 <td id="sale_quantity_{{$order_detail->id}}">{{$order_detail->sale_quantity}}</td>
                                 <td id="price_{{$order_detail->id}}">{{number_format($order_detail->price)}}</td>
                                 <td id="created_at_{{$order_detail->id}}">{{$order_detail->created_at->format('d/m/Y')}}</td>

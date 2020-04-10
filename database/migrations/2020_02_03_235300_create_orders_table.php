@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
             $table->bigIncrements('id');
             $table->string('customer_name',25);
             $table->string('customer_phone',25);
-            $table->string('customer_email',30);
+            $table->string('customer_email',50);
             $table->bigInteger('status_id')->unsigned();
             $table->foreign('status_id')->references('id')->on('status')->onDelete('cascade')->onUpdate('no action');
             $table->bigInteger('deliverer_id')->unsigned();

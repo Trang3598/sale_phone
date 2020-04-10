@@ -26,7 +26,7 @@ class UserController extends Controller
         $this->middleware('permission:user-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:user-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:user-delete', ['only' => ['destroy']]);
-        $this->middleware('permission:user-account', ['only' => ['account','settingAccount']]);
+        $this->middleware('permission:user-account', ['only' => ['account', 'settingAccount']]);
     }
 
     public function index()
@@ -83,7 +83,11 @@ class UserController extends Controller
         $users = $this->user->update($id, $data);
         DB::table('model_has_roles')->where('model_id', $id)->delete();
         $users->assignRole($request->input('roles'));
-        return Response::json($users);
+        $role_data = [];
+        foreach ($users->roles as $item) {
+            array_push($role_data, $item->name);
+        }
+        return Response::json(['users' => $users,'role_data' => $role_data]);
     }
 
     public function destroy($id)

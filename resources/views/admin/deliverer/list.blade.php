@@ -45,7 +45,7 @@
                             <tr id="id_{{ $deliverer->id }}">
                                 <td id="deliverer_id_{{$deliverer->id}}">{{$deliverer->id}}</td>
                                 <td id="deliverer_name_{{$deliverer->id}}">{{$deliverer->deliverer_name}}</td>
-                                <td id="deliverer_phone_{{$deliverer->id}}">{{$deliverer->deliverer_phone}}</td>
+                                <td id="deliverer_phone_{{$deliverer->id}}">{{isset($deliverer->deliverer_phone)?$deliverer->deliverer_phone:''}}</td>
                                 <td id="created_at_{{$deliverer->id}}">{{$deliverer->created_at->format('d/m/Y')}}</td>
                                 <td id="updated_at_{{$deliverer->id}}">{{$deliverer->updated_at->format('d/m/Y')}}</td>
                                 @can('deliverer-edit')

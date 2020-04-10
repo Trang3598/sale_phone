@@ -21,6 +21,8 @@ class CreateOrderDetailsTable extends Migration
             $table->foreign('product_id')->references('id')->on('products')->onDelete('restrict')->onUpdate('no action');
             $table->bigInteger('sale_quantity');
             $table->bigInteger('price');
+            $table->bigInteger('color_id')->unsigned();
+            $table->foreign('color_id')->references('id')->on('colors')->onDelete('restrict')->onUpdate('no action');
             $table->timestamps();
             $table->softDeletes();
         });

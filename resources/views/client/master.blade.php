@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="text/javascript">
         $(function () {
-            var pull = $('#pull');
+            // var pull = $('#pull');
             menu = $('nav ul');
             menuHeight = menu.height();
 
@@ -56,7 +56,12 @@
             </div>
             <div id="cart" class="col-md-2 col-sm-12 col-xs-12">
                 <a class="display" href="#">Giỏ hàng</a>
-                <a href="#">6</a>
+                <a href="#">
+                    @if(Session::has('cart')){{Session('cart')->totalQty}}
+                    @else
+                       0
+                    @endif
+                </a>
             </div>
         </div>
     </div>
@@ -72,8 +77,9 @@
                     <ul>
                         <li class="menu-item">danh mục sản phẩm</li>
                         @foreach($categories as $category)
-                            <li class="menu-item" id="product_{{$category->id}}"><a href="{{route('category.product',$category->id)}}" title=""
-                                                                                    data-id="{{$category->id}}">{{$category->category_name}}</a>
+                            <li class="menu-item" id="product_{{$category->id}}"><a
+                                    href="{{route('category.product',$category->id)}}" title=""
+                                    data-id="{{$category->id}}">{{$category->category_name}}</a>
                             </li>
                         @endforeach
                     </ul>
@@ -159,7 +165,7 @@
 <!-- endmain -->
 
 <!-- footer -->
-<footer id="footer">
+<footer id="footer-master">
     <div id="footer-t">
         <div class="container">
             <div class="row">
@@ -202,6 +208,7 @@
 </footer>
 <!-- endfooter -->
 <script src="{{asset('js/client/details.js')}}"></script>
+<script src="{{asset('js/client/cart.js')}}"></script>
 </body>
 </html>
 @yield('forminfor')

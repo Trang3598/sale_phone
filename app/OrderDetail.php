@@ -9,14 +9,21 @@ class OrderDetail extends Model
 {
     use SoftDeletes;
     protected $table = "order_details";
-    protected $fillable = ['order_id','product_id','sale_quantity','price',];
-    protected $dates = ['created_at','updated_at','deleted_at'];
+    protected $fillable = ['order_id', 'product_id', 'sale_quantity', 'price', 'color_id'];
+    protected $dates = ['created_at', 'updated_at', 'deleted_at'];
+
     public function product()
     {
         return $this->belongsTo('App\Product');
     }
+
     public function order()
     {
         return $this->hasOne('App\Order');
+    }
+
+    public function color()
+    {
+        return $this->hasOne('App\Color', 'id','color_id');
     }
 }

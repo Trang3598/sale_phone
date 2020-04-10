@@ -34,9 +34,9 @@
                         <th>Avatar</th>
                         <th>Fullname</th>
                         <th>Email</th>
+                        <th>Phone Number</th>
                         <th>Roles</th>
                         <th>Date Created</th>
-                        <th>Date Updated</th>
                         @can('user-edit','user-delete')
                             <th colspan="2">Action</th>
                         @endcan
@@ -47,11 +47,12 @@
                         @foreach($users as $user)
                             <tr id="id_{{ $user->id }}">
                                 <td id="user_id_{{$user->id}}">{{$user->id}}</td>
-                                <td id="username_{{$user->id}}">{{$user->username}}</td>
+                                <td id="username_{{$user->id}}">{{isset($user->username) ? $user->username :''}}</td>
                                 <td id="avatar_{{$user->id}}"><img src="images/{{$user->avatar}}"
                                                                    style="width: 100px;height:100px"></td>
-                                <td id="full_name_{{$user->id}}">{{$user->full_name}}</td>
-                                <td id="email_{{$user->id}}">{{$user->email}}</td>
+                                <td id="full_name_{{$user->id}}">{{isset($user->full_name)? $user->full_name:''}}</td>
+                                <td id="email_{{$user->id}}">{{isset($user->email)? $user->email : ''}}</td>
+                                <td id="phone_number_{{$user->id}}">{{isset($user->phone_number) ?$user->phone_number:''}}</td>
                                 <td id="role_{{$user->id}}">
                                     @if(!empty($user->getRoleNames()))
                                         @foreach($user->getRoleNames() as $v)
@@ -60,7 +61,6 @@
                                     @endif
                                 </td>
                                 <td id="created_at_{{$user->id}}">{{isset($user->created_at)?$user->created_at->format('d/m/Y'):''}}</td>
-                                <td id="updated_at_{{$user->id}}">{{isset($user->updated_at)?$user->updated_at->format('d/m/Y'):''}}</td>
                                 @can('user-edit')
                                     <td>
                                         <div class="btn-edit">
@@ -123,8 +123,8 @@
                             })
                         });
                         $(document).on('click', '.edit-user', function () {
-                            var category_id = $(this).data('id');
-                            $.get('admin/user/' + category_id + '/edit', function (data) {
+                            var user_id = $(this).data('id');
+                            $.get('admin/user/' + user_id + '/edit', function (data) {
                                 $("#user").html(data);
                                 $('#userCrudModal').html("Edit User Information");
                                 $('#btn-save').val("edit-user");
@@ -146,7 +146,10 @@
                                 contentType: false,
                                 processData: false,
                                 success: function (data) {
-                                    var dataItem = '<tr id="id_' + data.id + '"><td>' + data.id + '</td><td>' + data.username + '</td><td><img id="avatar_' + data.id + '"  src = "images/' + data.avatar + '" alt ="" style="height:100px;width:100px" class="img-responsive" />' + '</td><td>' + data.full_name + '</td><td>' + data.email + '</td><td>' + data.roles + '</td><td>' + data.created_at + '</td><td>' + data.updated_at + '</td>';
+                                    var dataItem = '<tr id="id_' + data.id + '"><td>' + data.users.id + '</td><td>' + data.users.username + '</td><td>' +
+                                        '<img id="avatar_' + data.users.id + '"  src = "images/' + data.users.avatar + '" alt ="" style="height:100px;width:100px" class="img-responsive" />' +
+                                        '</td><td>' + data.users.full_name + '</td><td>' + data.users.email +
+                                        '</td><td>' + data.phone_number + '</td><td>' + data.roles + '</td><td>' + data.created_at + '</td>';
                                     dataItem += '<td><a href="javascript:void(0)" id="edit-user" data-id="' + data.id + '" class="btn btn-success mr-2">Update</a></td>';
                                     dataItem += '<td><a href="javascript:void(0)" id="delete-user" data-id="' + data.id + '" class="btn btn-danger delete-user ml-1">Delete</a></td></tr>';
                                     $('#listItem').append(dataItem);
@@ -161,6 +164,7 @@
                                         $('#avatar-error').html(data.responseJSON.errors.avatar);
                                         $('#full_name-error').html(data.responseJSON.errors.full_name);
                                         $('#email-error').html(data.responseJSON.errors.email);
+                                        $('#phone_number-error').html(data.responseJSON.errors.phone_number);
                                         $('#password-error').html(data.responseJSON.errors.password);
                                         $('#confirm-error').html(data.responseJSON.errors.confirm);
                                         $('#created_at-error').html(data.responseJSON.errors.created_at);
@@ -190,6 +194,7 @@
                                     $("#avatar_" + data.id).attr('src', 'images/' + data.avatar);
                                     $("#full_name_" + data.id).html(data.full_name);
                                     $("#email_" + data.id).html(data.email);
+                                    $("#phone_number_" + data.id).html(data.phone_number);
                                     $("#role_" + data.id).html(data.roles);
                                     $("#created_at_" + data.id).html(data.created_at);
                                     $("#updated_at_" + data.id).html(data.updated_at);
@@ -207,6 +212,12 @@
                                     }
                                     if (data.responseJSON.errors.full_name) {
                                         $('#full_name-error').html(data.responseJSON.errors.full_name);
+                                    }
+                                    if (data.responseJSON.errors.email) {
+                                        $('#email-error').html(data.responseJSON.errors.email);
+                                    }
+                                    if (data.responseJSON.errors.phone_number) {
+                                        $('#phone_number-error').html(data.responseJSON.errors.phone_number);
                                     }
                                     if (data.responseJSON.errors.password) {
                                         $('#password-error').html(data.responseJSON.errors.password);

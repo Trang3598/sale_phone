@@ -10,7 +10,7 @@ body {
 }
 
 #header {
-    background: #FF9600;
+    background: deepskyblue;
 }
 
 #logo, #search, #cart {
@@ -168,7 +168,7 @@ padding-left: 12px;
 }
 
 #footer-b {
-    background: #FF6700;
+    background: deepskyblue;
     color: #fff;
     font-size: 13px;
     position: relative;

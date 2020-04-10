@@ -29,11 +29,20 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-12">Color</label>
+                        <div class="col-sm-12">
+                            {!! Form::select('color_id', ['' => 'Enter the color ...'] + $colors,'',['class'=> 'form-control']) !!}
+                            <span class="text-danger">
+                                <strong id="color_id-error"></strong>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-12">Sale quantity</label>
                         <div class="col-sm-12">
                             <input type="number" class="form-control" id="sale_quantity" name="sale_quantity"
                                    placeholder="Enter sale quantity"
-                                   value=""  required="">
+                                   value="" required="">
                             <span class="text-danger">
                                 <strong id="sale_quantity-error"></strong>
                             </span>
@@ -44,7 +53,7 @@
                         <div class="col-sm-12">
                             <input type="number" class="form-control" id="price" name="price"
                                    placeholder="Enter price"
-                                   value=""  required="">
+                                   value="" required="">
                             <span class="text-danger">
                                 <strong id="price-error"></strong>
                             </span>

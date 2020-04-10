@@ -59,11 +59,10 @@
                     @else
                         <p>Chỉ: <span class="price">{{number_format($product->price)}} ₫</span></p>
                     @endif
-                    <p>Màu có sẵn:</p>
                     <p>Bảo hành: {{$product->warranty}}</p>
                     <p>Thời gian khuyến mãi: {{$product->start_promotion->format('d/m/Y')}}
                         - {{$product->end_promotion->format('d/m/Y')}}</p>
-                    <p class="add-cart text-center"><a href="#">Đặt hàng online</a></p>
+                    <p class="add-cart text-center"><a href="{{route('order.item')}}">Đặt hàng online</a></p>
                 </div>
             </div>
         </div>

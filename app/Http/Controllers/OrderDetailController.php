@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Color;
 use App\Http\Requests\OrderDetailRequest;
 use App\Order;
 use App\OrderDetail;
@@ -40,7 +41,9 @@ class OrderDetailController extends Controller
         $orders = $listOrders->pluck('id', 'id')->all();
         $listProducts = Product::all();
         $products = $listProducts->pluck('name_phone', 'id')->all();
-        return view('admin.order_detail.create', compact('orders', 'products'));
+        $listColors = Color::all();
+        $colors = $listColors->pluck('color_name', 'product_id')->all();
+        return view('admin.order_detail.create', compact('orders', 'products','colors'));
     }
 
     public function store(OrderDetailRequest $request)

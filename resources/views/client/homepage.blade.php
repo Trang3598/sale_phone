@@ -15,8 +15,12 @@
                         @else
                             <p>Chỉ: <span class="price">{{number_format($product->price)}} ₫</span></p>
                         @endif
-                        <div class="marsk">
-                            <a href="{{route('product.detail',$product->id)}}">Xem chi tiết</a>
+                        <div class="single-item-caption">
+                            <a class="add-to-cart pull-left" href="{{route('cart',$product->id)}}"><i
+                                    class="fa fa-shopping-cart"></i></a>
+                            <a class="beta-btn primary" href="{{route('product.detail',$product->id)}}">Details <i
+                                    class="fa fa-chevron-right"></i></a>
+                            <div class="clearfix"></div>
                         </div>
                     </div>
                 @endforeach
@@ -32,8 +36,12 @@
                                          class="img-thumbnail"></a>
                         <p><a href="#">{{$item->name_phone}}</a></p>
                         <p class="price">{{number_format($item->price)}} VND</p>
-                        <div class="marsk">
-                            <a href="{{route('product.detail',$item->id)}}">Xem chi tiết</a>
+                        <div class="single-item-caption">
+                            <a class="add-to-cart pull-left" href="{{route('cart',$item->id)}}"><i
+                                    class="fa fa-shopping-cart"></i></a>
+                            <a class="beta-btn primary" href="{{route('product.detail',$item->id)}}">Details <i
+                                    class="fa fa-chevron-right"></i></a>
+                            <div class="clearfix"></div>
                         </div>
                     </div>
                 @endforeach

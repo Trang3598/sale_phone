@@ -24,44 +24,27 @@ class Cart extends Model
 
     public function add($item, $id)
     {
-        $giohang = ['qty' => 0, 'price' => $item->price, 'item' => $item, 'discount' => ($item->price - $item->promotion_price)];
+        if ($item->start_promotion <= Carbon::now() && Carbon::now() <= $item->end_promotion) {
+            $cart = ['qty' => 0, 'price' => $item->price, 'item' => $item, 'discount' => ($item->price - $item->promotion_price)];
+        } else {
+            $cart = ['qty' => 0, 'price' => $item->price, 'item' => $item, 'discount' => 0];
+        }
         if ($this->items) {
             if (array_key_exists($id, $this->items)) {
-                $giohang = $this->items[$id];
+                $cart = $this->items[$id];
             }
         }
-        $giohang['qty']++;
-        $giohang['price'] = $item->price * $giohang['qty'];
-        $this->items[$id] = $giohang;
+        $cart['qty']++;
+        $cart['price'] = $item->price * $cart['qty'];
+        $this->items[$id] = $cart;
         $this->totalQty++;
         $this->totalPrice += $item->price;
-
     }
 
-    //xóa 1
-    public function reduceByOne($id)
-    {
-        $this->items[$id]['qty']--;
-        $this->items[$id]['price'] -= $this->items[$id]['item']['price'];
-        $this->totalQty--;
-        $this->totalPrice -= $this->items[$id]['item']['price'];
-        if ($this->items[$id]['qty'] <= 0) {
-            unset($this->items[$id]);
-        }
-    }
-
-    //xóa nhiều
     public function removeItem($id)
     {
         $this->totalQty -= $this->items[$id]['qty'];
         $this->totalPrice -= $this->items[$id]['price'];
         unset($this->items[$id]);
-    }
-
-    public function getColor($id)
-    {
-        $colors = $this->color->newQuery();
-        $colors->where('product_id', '=', $id)->get();
-        return $colors;
     }
 }

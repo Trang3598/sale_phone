@@ -1,0 +1,411 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font: 14px/18px Helvetica, Arial, 'DejaVu Sans', 'Liberation Sans', Freesans, sans-serif;
+    color: #333;
+    outline: none;
+    zoom: 1;
+}
+
+.picsuccess {
+    overflow: hidden;
+    height: 40px;
+    padding-top: 20px;
+    width: auto;
+}
+
+.iconsuccess {
+    background-position: -25px 0;
+    width: 19px;
+    height: 15px;
+    margin-right: 3px;
+}
+
+.iconnoti {
+    background-size: 80px 85px;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.picsuccess .noticencall {
+    left: 0;
+    right: 0;
+    line-height: 36px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    display: none;
+}
+
+.picsuccess .noticencall div span {
+    float: left;
+    width: 24px;
+    height: 24px;
+    background: #c10017;
+    border-radius: 20px;
+    position: relative;
+    margin-top: 3px;
+}
+
+.picsuccess .noticencall div {
+    display: block;
+    margin: auto;
+    width: auto;
+}
+
+.picsuccess .notistatus {
+    left: 0;
+    right: 0;
+    line-height: 18px;
+    font-size: 16px;
+    color: #00af1d;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.thank {
+    display: block;
+    overflow: hidden;
+    width: auto;
+    color: #333;
+    line-height: 22px;
+    padding: 20px;
+    background: #fff;
+}
+
+b {
+    font-weight: bold;
+}
+
+.titlebill {
+    display: block;
+    margin: 0 20px;
+    line-height: 30px;
+    font-size: 14px;
+    color: #333;
+    background: #f3f3f3;
+    text-transform: uppercase;
+    padding: 0 10px;
+}
+
+.infoorder, .callship, .cty {
+    display: block;
+    overflow: hidden;
+    font-size: 14px;
+    color: #333;
+    padding: 10px 20px 0 20px;
+    margin: auto;
+    background: #fff;
+}
+
+.infoorder div {
+    display: block;
+    overflow: hidden;
+    margin-bottom: 5px;
+    padding-left: 10px;
+}
+
+.infoorder div:before {
+    content: '•';
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+    font-size: 20px;
+    color: #999;
+    margin: 0 3px 0 -10px;
+}
+
+.choosepayment div {
+    overflow: hidden;
+}
+
+.choosepayment div h3 {
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 10px 20px 10px;
+}
+
+.choosepayment div a:nth-child(2n+1) {
+    margin-left: 83px;
+    margin-right: 119px
+}
+
+.choosepayment div a {
+    float: left;
+    overflow: hidden;
+    width: 270px;
+    border-radius: 4px;
+    font-size: 13px;
+    line-height: normal;
+    color: #fff;
+    text-align: center;
+    background: #2889d6;
+    margin-bottom: 10px;
+    padding: 15px 0;
+}
+
+.choosepayment div a:nth-child(2n) {
+    margin-right: 20px;
+}
+
+.choosepayment div a.atm {
+    padding: 10px 0 6px;
+}
+
+.choosepayment div a.atm img {
+    width: 26px;
+    height: 13px;
+}
+
+.choosepayment div a.atm div {
+    margin-top: -6px;
+    overflow: hidden;
+}
+
+p {
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 0;
+    text-rendering: geometricPrecision;
+}
+
+.choosepayment div a.visa {
+    padding: 2px 0;
+}
+
+.choosepayment div a.visa div img {
+    float: left;
+    height: 17px;
+    margin-left: 15px;
+}
+
+img {
+    border: 0;
+}
+
+.choosepayment div a.visa div {
+    overflow: hidden;
+    width: 110px;
+    margin: 0 auto;
+    margin-top: 4px;
+}
+
+.deleteOrder a {
+    color: #288ad6;
+}
+
+a {
+    text-decoration: none;
+}
+
+.deleteOrder {
+    overflow: hidden;
+    margin-top: 10px;
+    margin-left: 365px;
+}
+
+.callship a {
+    color: #288ad6;
+    font-weight: 600;
+}
+
+.link-csht a {
+    font-weight: normal;
+}
+
+.listorder {
+    display: block;
+    overflow: visible;
+    background: #fff;
+    margin: auto;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+.listorder li {
+    display: block;
+    overflow: visible;
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+    margin: 0 20px;
+    height: 140px;
+}
+
+.listorder li .colimg {
+    float: left;
+    overflow: hidden;
+    width: 75px;
+}
+
+.listorder li a {
+    display: block;
+    overflow: hidden;
+}
+
+.listorder li .colinfo {
+    display: block;
+    overflow: visible;
+    margin-left: 75px;
+}
+
+.listorder li .colinfo strong {
+    font-weight: 300;
+    font-size: 14px;
+    color: #c10017;
+    float: right;
+    margin-right: 10px;
+}
+
+.listorder li .colinfo a {
+    display: inline-block;
+    font-size: 14px;
+    color: #333;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    width: 62%;
+}
+
+.onecolor {
+    float: left;
+    position: relative;
+    background: #fff;
+    font-size: 14px;
+    color: #333;
+    margin-top: 10px;
+}
+
+.onecolor span {
+    color: #999;
+}
+
+.quan {
+    float: right;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.quan span {
+    color: #999;
+}
+
+.listorder li .promotion.choose {
+    overflow: visible !important;
+    margin-top: 5px !important;
+    float: left;
+    width: 76%;
+}
+
+.listorder li .promotion {
+    background: #fff;
+    padding: 5px;
+    height: auto;
+    margin: 10px 10px 0 0;
+    display: block;
+    overflow: hidden;
+}
+
+.listorder li .promotion.choose .title {
+    color: #288ad6;
+    font-size: 12px;
+    text-align: left;
+    pointer-events: none;
+}
+
+.listorder li .promotion.choose .title label {
+    cursor: pointer;
+    color: #288ad6;
+    font-size: 12px;
+    position: relative;
+}
+
+.listorder li .promotion.choose .title label:after {
+    content: '';
+    width: 0;
+    right: -20px;
+    border-top: 6px solid #288ad6;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    display: inline-block;
+    vertical-align: middle;
+    float: right;
+    position: absolute;
+    top: 5px;
+}
+
+.listorder li .promotion span {
+    display: block;
+    overflow: hidden;
+    padding-left: 0px;
+    color: #333;
+    margin-bottom: 5px;
+    font-size: 12px;
+}
+
+.listorder li .promotion span:before {
+    content: '•';
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 20px;
+    color: #999;
+}
+
+.listorder li .promotion.choose a {
+    display: inline-block;
+    width: auto;
+    font-size: 12px;
+    overflow: initial;
+    color: #288ad6;
+}
+
+.listorder li .colinfo a {
+    display: inline-block;
+    font-size: 14px;
+    color: #333;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    width: 62%;
+}
+
+.buyother {
+    display: block;
+    overflow: hidden;
+    background: #fff;
+    line-height: 40px;
+    text-align: center;
+    margin: 15px auto;
+    width: 300px;
+    font-size: 14px;
+    color: #288ad6;
+    font-weight: 600;
+    text-transform: uppercase;
+    border: 1px solid #288ad6;
+    border-radius: 4px;
+}
+
+.listorder li img {
+    display: block;
+    width: 55px;
+    height: auto;
+    margin: 5px auto 10px;
+}
+
+#wrap-inner {
+    background: #fff;
+    margin: 30px auto 0 auto;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, .15);
+}
