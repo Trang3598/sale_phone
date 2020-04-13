@@ -209,6 +209,7 @@
 <!-- endfooter -->
 <script src="{{asset('js/client/details.js')}}"></script>
 <script src="{{asset('js/client/cart.js')}}"></script>
+<script src="{{asset('js/client/order_success.js')}}"></script>
 </body>
 </html>
 @yield('forminfor')

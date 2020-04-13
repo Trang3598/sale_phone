@@ -89,7 +89,7 @@
                                                    class="price" data-id="{{$cart['item']['id']}}"
                                                    data-value="{{$cart['item']['price']}}"
                                                    id="price_{{$cart['item']['id']}}">
-                                            <input type="number" id="1" value="{{$cart['qty']}}" class="number"/>
+                                            <input type="number" id="1" value="{{$cart['qty']}}" class="number" readonly/>
                                             <div class="augment" id="augment_{{$cart['item']['id']}}"
                                                  data-id="{{$cart['item']['id']}}">
                                             </div>

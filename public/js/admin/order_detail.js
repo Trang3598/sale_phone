@@ -119,7 +119,6 @@ $(document).ready(function () {
                 contentType: false,
                 processData: false,
                 success: function (data) {
-
                     $('#update_order_detail_form').trigger("reset");
                     $('#update_order_detail').html('Save Changes');
                     $('#showmess').html('Edit successfully').css({'display': 'block'});

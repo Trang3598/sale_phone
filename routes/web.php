@@ -92,5 +92,7 @@ Route::group(['prefix' => 'client'], function () {
     Route::get('cart/{id}', 'Client\HomeController@addToCart')->name('cart');
     Route::get('cart/delete/{id}', 'Client\HomeController@getDelItemCart')->name('delete.item');
     Route::post('sendOrder', 'Client\HomeController@sendOrder')->name('send-order');
-    Route::get('order/success','Client\HomeController@orderSuccess')->name('order-success');
+    Route::get('order/success', 'Client\HomeController@orderSuccess')->name('order-success');
+    Route::post('payment', 'Client\HomeController@payment')->name('payment');
+    Route::get('cancel', 'Client\HomeController@cancelOrder')->name('order-cancel');
 });

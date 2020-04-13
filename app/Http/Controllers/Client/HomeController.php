@@ -170,7 +170,7 @@ class HomeController
         } else {
             Session::forget('cart');
             return response()->json([
-                'redirect' => route('complete-order')
+                'redirect' => route('home.index')
             ]);
         }
         return Response::json(['cart' => $cart]);
@@ -198,11 +198,13 @@ class HomeController
                 'note' => $request->note,
                 'status_id' => $status_id,
                 'total_price' => $request->total_price,
+                'payment' => 0,
                 "created_at" => date('Y-m-d H:i:s'),
                 "updated_at" => date('Y-m-d H:i:s'),
             ];
             $this->order->create($data);
             $order = DB::table('orders')->orderBy('id', 'desc')->limit(1)->get();
+            session()->push('order', $order);
             $customer = [
                 'customer_name' => $request->customer_name,
                 'customer_phone' => $request->customer_phone,
@@ -215,7 +217,8 @@ class HomeController
             }
             $records = [];
             for ($i = 0; $i < sizeof($productList); $i++) {
-                $color[$i] = DB::table('colors')->where('deleted_at', null)->where('product_id', '=', $key)->where('color_name', 'like', "%" . $request->color_id[$i] . "%")->get('id')[0]->id;
+                $color[$i] = DB::table('colors')->where('deleted_at', null)->where('product_id', '=', $productList[$i]->id)
+                    ->where('color_name', 'like', "%" . $request->color_id[$i] . "%")->get('id')[0]->id;
                 array_push($records, [$productList[$i], $color[$i], $request->sale_quantity[$i]]);
             }
             foreach ($records as $record) {
@@ -242,6 +245,7 @@ class HomeController
                 DB::table('orders')->where('customer_name', $customer_info[0]['customer_name'])
                     ->where('customer_phone', $customer_info[0]['customer_phone'])
                     ->where('customer_email', $customer_info[0]['customer_email'])
+                    ->where('deleted_at', null)
                     ->update(['customer_name' => $request->customer_name, 'customer_phone' => $request->customer_phone, 'customer_email' => $request->customer_email]);
             }
             Session::forget('cart');
@@ -258,7 +262,46 @@ class HomeController
     public function orderSuccess()
     {
         $customer_info = session()->get('customer_info');
-        $order = DB::table('orders')->orderBy('id', 'desc')->limit(1)->get();
-        return view('client.order_info', compact('customer_info', 'order'));
+        $order = session()->get('order')[0];
+        if ($order != null) {
+            $order_details = $this->order_detail->findThrough('order_id', $order[0]->id);
+            return view('client.order_info', compact('customer_info', 'order', 'order_details'));
+        } else {
+            return redirect()->route('home.index');
+        }
+    }
+
+    public function payment(Request $request)
+    {
+        if ($request->ajax()) {
+            $customer_info = session()->get('customer_info');
+            $order = session()->get('order')[0];
+            DB::table('orders')->where('id', $order[0]->id)
+                ->where('deleted_at', null)
+                ->update(['payment' => $request->payment]);
+        }
+        return response()->json(['order' => $order]);
+    }
+
+    public function cancelOrder()
+    {
+        DB::beginTransaction();
+        try {
+            $customer_info = session()->get('customer_info');
+            $order = session()->get('order')[0];
+            $order_details = $this->order_detail->findThrough('order_id', $order[0]->id);
+            foreach ($order_details as $item) {
+                $this->order_detail->delete($item->id);
+            }
+            $this->order->delete($order[0]->id);
+            Session::forget('order');
+            DB::commit();
+        } catch (Exception $exception) {
+            DB::rollBack();
+            throw new Exception($exception->getMessage());
+        }
+        return response()->json([
+            'redirect' => route('home.index')
+        ]);
     }
 }

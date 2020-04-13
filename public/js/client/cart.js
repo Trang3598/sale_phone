@@ -19,6 +19,9 @@ $(document).ready(function () {
                 processData: false,
                 success: function (data) {
                     $("#item_" + product_id).remove();
+                    if (data.redirect) {
+                        window.location = data.redirect;
+                    }
                 },
                 error: function (data) {
                     console.log('Error:', data);

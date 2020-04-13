@@ -13,6 +13,32 @@ h3 {
     text-transform: uppercase;
 }
 
+.choosepayment div a.atm {
+    padding: 10px 0 6px;
+    text-decoration: none;
+}
+
+.choosepayment div a:nth-child(2n+1) {
+    margin-left: 83px;
+    margin-right: 119px;
+    text-decoration: none;
+}
+
+.choosepayment div a {
+    float: left;
+    overflow: hidden;
+    width: 270px;
+    border-radius: 4px;
+    font-size: 13px;
+    line-height: normal;
+    color: #fff;
+    text-align: center;
+    background: #2889d6;
+    margin-bottom: 10px;
+    padding: 15px 0;
+    text-decoration: none;
+}
+
 .listorder {
     display: block;
     overflow: visible;
@@ -173,6 +199,7 @@ img {
 .listorder li:last-child {
     margin-bottom: 0;
 }
+
 ul, ol {
     list-style: none;
 }
@@ -606,11 +633,13 @@ div.drop-down span:first-child a:after {
     margin-left: -30px; /* Excessive -margin to bring link text back to center */
     margin-right: 5px;
 }
-#cars{
+
+#cars {
     font-size: 13px;
     padding-top: 0px;
 }
-.change{
+
+.change {
     color: #288ad6;
     display: inline-block;
     margin-left: 10px;
@@ -618,10 +647,23 @@ div.drop-down span:first-child a:after {
     border-bottom: 1px dotted #288ad6;
     cursor: pointer;
 }
+
 #wrap-inner {
     background: #fff;
     margin: 30px auto 0 auto;
     padding-bottom: 5px;
     margin-bottom: 20px;
     box-shadow: 0 0 20px rgba(0, 0, 0, .15);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.choosepayment div h3 {
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 10px 20px 10px;
 }

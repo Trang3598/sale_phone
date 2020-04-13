@@ -9,7 +9,7 @@ class Order extends Model
 {
     use SoftDeletes;
     protected $table = "orders";
-    protected $fillable = ['customer_name', 'customer_phone', 'customer_email', 'status_id', 'deliverer_id', 'create_date', 'total_price', 'delivery_address', 'note'];
+    protected $fillable = ['customer_name', 'customer_phone', 'customer_email', 'status_id', 'deliverer_id', 'create_date', 'total_price', 'delivery_address', 'note','payment'];
     protected $dates = ['created_at', 'updated_at','deleted_at'];
 
     public function orderDetail()
