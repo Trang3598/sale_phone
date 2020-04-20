@@ -21,12 +21,16 @@ class OrderController extends Controller
 {
     protected $order;
     protected $order_detail;
+    protected $deliverer;
+    protected $status;
 
-    public function __construct(Order $order, OrderDetail $orderDetail)
+    public function __construct(Order $order, OrderDetail $orderDetail, Deliverer $deliverer, Status $status)
     {
         parent::__construct();
         $this->order = new Repository($order);
         $this->order_detail = new Repository($orderDetail);
+        $this->deliverer = new Repository($deliverer);
+        $this->status = new Repository($status);
         $this->middleware('permission:order-list');
         $this->middleware('permission:order-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:order-edit', ['only' => ['edit', 'update']]);
@@ -53,7 +57,9 @@ class OrderController extends Controller
     public function store(OrderRequest $request)
     {
         $orders = $this->order->create($request->all());
-        return Response::json($orders);
+        $deliverer = $this->deliverer->find($request->deliverer_id);
+        $status = $this->status->find($request->status_id);
+        return Response::json(["orders" => $orders, "deliverer" => $deliverer, "status" => $status]);
     }
 
     public function show($id)
@@ -75,7 +81,9 @@ class OrderController extends Controller
     public function update($id, OrderRequest $request)
     {
         $orders = $this->order->update($id, $request->all());
-        return Response::json($orders);
+        $deliverer = $this->deliverer->find($request->deliverer_id);
+        $status = $this->status->find($request->status_id);
+        return Response::json(["orders" => $orders, "deliverer" => $deliverer, "status" => $status]);
     }
 
     public function destroy($id)
@@ -98,14 +106,11 @@ class OrderController extends Controller
                     '<td>' . $order->id . '</td>' .
                     '<td>' . $order->customer_name . '</td>' .
                     '<td>' . $order->customer_phone . '</td>' .
-                    '<td>' . $order->customer_email . '</td>' .
                     '<td>' . $order->status->status_name . '</td>' .
                     '<td>' . $order->deliverer->deliverer_name . '</td>' .
                     '<td>' . $order->total_price . '</td>' .
                     '<td>' . $order->delivery_address . '</td>' .
-                    '<td>' . $order->note . '</td>' .
                     '<td>' . $order->created_at->format('d/m/Y') . '</td>' .
-                    '<td>' . $order->updated_at->format('d/m/Y') . '</td>' .
                     '<td>' . $buttonUpdate . '</td>' .
                     '<td>' . $buttonDelete . '</td>' .
                     '</tr>';

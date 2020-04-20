@@ -8,10 +8,12 @@
     <title>Sky Shop - @yield('title')</title>
     <link rel="stylesheet" href="{{asset('client/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('client/css/home.css')}}">
+    <link rel="stylesheet" href="{{asset('client/css/search.css')}}">
     <script type="text/javascript" src="{{asset('client/js/jquery-3.2.1.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
     <script type="text/javascript" src="{{asset('client/js/bootstrap.min.js')}}"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <script type="text/javascript">
         $(function () {
             // var pull = $('#pull');
@@ -50,25 +52,40 @@
                         </a></nav>
                 </h1>
             </div>
-            <div id="search" class="col-md-7 col-sm-12 col-xs-12">
-                <input type="text" name="text" value="Nhập từ khóa ...">
-                <input type="submit" name="submit" value="Tìm Kiếm">
+            <div id="search" class="col-md-7 col-sm-12 col-xs-12 autocomplete">
+                <form action="{{route('search-product')}}" method="post" autocomplete="off" id="searchForm">
+                    @csrf
+                    <div class="autocomplete">
+                        <input type="text" id="search-data" value="" class="form-control" name="searchData"
+                               placeholder="Bạn tìm gì..."/>
+                    </div>
+                    <button type="submit" id="display-button"><i class="fa fa-search"></i></button>
+                    {{--                    <ul class="wrap-suggestion">--}}
+                    {{--                        <li>--}}
+                    {{--                            <a href="/dtdd/samsung-galaxy-a20s">--}}
+                    {{--                                <img--}}
+                    {{--                                    src="https://cdn.tgdd.vn/Products/Images/42/204404/samsung-galaxy-a20s-black-200x200.jpg">--}}
+                    {{--                                <h3>Samsung Galaxy A20s 64GB</h3>--}}
+                    {{--                                <span class="price">5.390.000₫</span>--}}
+                    {{--                                <cite style="font-style: normal; text-decoration: line-through"></cite>--}}
+                    {{--                                <h6 class="textkm"></h6>--}}
+                    {{--                            </a>--}}
+                    {{--                        </li>--}}
+                    {{--                    </ul>--}}
+                </form>
             </div>
             <div id="cart" class="col-md-2 col-sm-12 col-xs-12">
                 <a class="display" href="#">Giỏ hàng</a>
-                <a href="#">
+                <a href="{{route('order.item')}}">
                     @if(Session::has('cart')){{Session('cart')->totalQty}}
                     @else
-                       0
+                        0
                     @endif
                 </a>
             </div>
         </div>
     </div>
 </header><!-- /header -->
-<!-- endheader -->
-
-<!-- main -->
 <section id="body">
     <div class="container">
         <div class="row">
@@ -114,25 +131,20 @@
                 <!-- phan slide la cac hieu ung chuyen dong su dung jquey -->
                 <div id="slider">
                     <div id="demo" class="carousel slide" data-ride="carousel">
-
-                        <!-- Indicators -->
                         <ul class="carousel-indicators">
                             <li data-target="#demo" data-slide-to="0" class="active"></li>
                             <li data-target="#demo" data-slide-to="1"></li>
                             <li data-target="#demo" data-slide-to="2"></li>
                         </ul>
-
-                        <!-- The slideshow -->
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <img src="{{asset('client/img/home/slide-1.png')}}" alt="Los Angeles">
+                                <img src="{{asset('images/' .$slides[0]->image)}}" alt="Los Angeles">
                             </div>
-                            <div class="carousel-item">
-                                <img src="{{asset('client/img/home/slide-2.png')}}" alt="Chicago">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="{{asset('client/img/home/slide-3.png')}}" alt="New York">
-                            </div>
+                            @for($i = 0;$i<sizeof($slides);$i++)
+                                <div class="carousel-item">
+                                    <img src="{{asset('images/'.$slides[$i]->image)}}" alt="New York">
+                                </div>
+                            @endfor
                         </div>
 
                         <!-- Left and right controls -->
@@ -144,19 +156,18 @@
                         </a>
                     </div>
                 </div>
-
-                <div id="banner-t" class="text-center">
-                    <div class="row">
-                        <div class="banner-t-item col-md-6 col-sm-12 col-xs-12">
-                            <a href="#"><img src="{{asset('client/img/home/banner-t-1.png')}}" alt=""
-                                             class="img-thumbnail"></a>
-                        </div>
-                        <div class="banner-t-item col-md-6 col-sm-12 col-xs-12">
-                            <a href="#"><img src="{{asset('client/img/home/banner-t-1.png')}}" alt=""
-                                             class="img-thumbnail"></a>
-                        </div>
-                    </div>
-                </div>
+                {{--                <div id="banner-t" class="text-center">--}}
+                {{--                    <div class="row">--}}
+                {{--                        <div class="banner-t-item col-md-6 col-sm-12 col-xs-12">--}}
+                {{--                            <a href="#"><img src="{{asset('client/img/home/banner-t-1.png')}}" alt=""--}}
+                {{--                                             class="img-thumbnail"></a>--}}
+                {{--                        </div>--}}
+                {{--                        <div class="banner-t-item col-md-6 col-sm-12 col-xs-12">--}}
+                {{--                            <a href="#"><img src="{{asset('client/img/home/banner-t-1.png')}}" alt=""--}}
+                {{--                                             class="img-thumbnail"></a>--}}
+                {{--                        </div>--}}
+                {{--                    </div>--}}
+                {{--                </div>--}}
                 @yield('main')
             </div>
         </div>
@@ -210,6 +221,7 @@
 <script src="{{asset('js/client/details.js')}}"></script>
 <script src="{{asset('js/client/cart.js')}}"></script>
 <script src="{{asset('js/client/order_success.js')}}"></script>
+<script src="{{asset('js/client/search.js')}}"></script>
 </body>
 </html>
 @yield('forminfor')

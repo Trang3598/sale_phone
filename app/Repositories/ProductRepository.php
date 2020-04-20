@@ -10,10 +10,10 @@ class ProductRepository extends Repository
     {
         $products = $this->model->newQuery();
         if (isset($data['price_from'])) {
-            $products->where('price', '>', $data['price_from']);
+            $products->where('price', '>=', $data['price_from']);
         }
         if (isset($data['price_to'])) {
-            $products->where('price', '<', $data['price_to']);
+            $products->where('price', '<=', $data['price_to']);
         }
         if (isset($data['showList'])) {
             if ($data['showList'] == self::HOT) {

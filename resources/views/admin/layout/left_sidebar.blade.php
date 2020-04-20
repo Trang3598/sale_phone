@@ -43,6 +43,11 @@
                                                 href="{{route('image.index')}}" aria-expanded="false"><i
                                 class="mdi mdi-relative-scale"></i><span class="hide-menu">Images</span></a></li>
                 @endcan
+                @can('slide-list')
+                    <li class="sidebar-item"><a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                                href="{{route('slide.index')}}" aria-expanded="false"><i
+                                class="mdi mdi-relative-scale"></i><span class="hide-menu">Slides</span></a></li>
+                @endcan
                 @can('deliverer-list')
                     <li class="sidebar-item"><a class="sidebar-link waves-effect waves-dark sidebar-link"
                                                 href="{{route('deliverer.index')}}" aria-expanded="false"><i

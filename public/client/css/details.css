@@ -65,7 +65,7 @@ body {
 }
 
 #cart a:last-child {
-    margin-left: 55px;
+    margin-left: 46px;
     color: #ff6600;
 }
 
@@ -75,7 +75,7 @@ body {
     }
 
     #cart a:last-child {
-        margin-left: 40px;
+        margin-left: 46px;
         color: #ff6600;
     }
 }
@@ -157,7 +157,7 @@ padding-left: 12px;
 }
 
 #footer-t {
-    background: #FF9600;
+    background: dodgerblue;
     color: #fff;
     padding: 15px 0 0 0;
 }
@@ -210,8 +210,9 @@ padding-left: 12px;
     }
 
     #cart a:last-child {
-        margin-left: 50px;
+        margin-left: 46px;
         color: #ff6600;
+
     }
 
     #menu {

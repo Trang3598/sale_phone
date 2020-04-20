@@ -24,19 +24,14 @@ class OrderRequest extends FormRequest
     public function rules()
     {
         $arr_validate = [
-            'customer_name' => 'required|max:50|min:3|unique:orders,customer_name',
-            'customer_phone' => 'required|numeric|digits_between:1,10|unique:orders,customer_phone',
-            'customer_email' => 'required|email|unique:orders,customer_email',
+            'customer_name' => 'required|max:50|min:3',
+            'customer_phone' => 'required|numeric|digits_between:1,10',
+            'customer_email' => 'required|email',
             'status_id' => 'required',
             'deliverer_id' => 'required',
             'total_price' => 'required|numeric',
             'delivery_address' =>'required|min:5|max:255',
         ];
-        if ($this->order) {
-            $arr_validate['customer_name'] = 'required|max:50|min:3|unique:orders,customer_name,' . $this->order;
-            $arr_validate['customer_phone'] = 'required|numeric|digits_between:1,10|unique:orders,customer_phone,' . $this->order;
-            $arr_validate['customer_email'] = 'required|email|unique:orders,customer_email,' . $this->order;
-        }
         return $arr_validate;
     }
 }

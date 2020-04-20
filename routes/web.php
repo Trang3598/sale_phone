@@ -19,6 +19,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::resource('comment', 'CommentController');
     Route::resource('sale_phone', 'SalePhoneController');
     Route::resource('role', 'RoleController');
+    Route::resource('slide', 'SlideController');
     Route::resource('c', 'DashboardController');
     Route::get('image/{image}/showImage', 'ImageController@showImage')->name('image.showImage');
     Route::get('export', 'ProductController@export')->name('product.export');
@@ -35,6 +36,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::get('deliverer/destroy/{deliverer}', 'DelivererController@destroy')->name('deliverer.delete');
     Route::get('comment/destroy/{comment}', 'CommentController@destroy')->name('comment.delete');
     Route::get('role/destroy/{role}', 'RoleController@destroy')->name('role.delete');
+    Route::get('slide/destroy/{slide}', 'SlideController@destroy')->name('slide.delete');
 
 });
 //search route
@@ -95,4 +97,6 @@ Route::group(['prefix' => 'client'], function () {
     Route::get('order/success', 'Client\HomeController@orderSuccess')->name('order-success');
     Route::post('payment', 'Client\HomeController@payment')->name('payment');
     Route::get('cancel', 'Client\HomeController@cancelOrder')->name('order-cancel');
+    Route::get('result/{key}', 'Client\HomeController@resultSearch')->name('search-result');
+    Route::post('search', 'Client\HomeController@searchItem')->name('search-product');
 });

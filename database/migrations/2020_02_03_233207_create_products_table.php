@@ -20,7 +20,7 @@ class CreateProductsTable extends Migration
             $table->string('thumbnail', 190);
             $table->string('name_phone', 50);
             $table->string('title', 190)->nullable();
-            $table->string('description', 190)->nullable();
+            $table->string('description', 500)->nullable();
             $table->bigInteger('quantity');
             $table->string('detail', 190)->nullable();
             $table->bigInteger('price')->nullable();
@@ -32,7 +32,7 @@ class CreateProductsTable extends Migration
             $table->string('os', 50)->nullable();
             $table->string('camera_primary', 50)->nullable();
             $table->string('battery', 50)->nullable();
-            $table->string('warranty', 50)->nullable();
+            $table->string('warranty', 255)->nullable();
             $table->string('bluetooth', 50)->nullable();
             $table->string('wlan', 50)->nullable();
             $table->bigInteger('promotion_price')->nullable();

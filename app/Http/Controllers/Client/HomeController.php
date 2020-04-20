@@ -16,8 +16,10 @@ use App\OrderDetail;
 use App\Product;
 use App\Repositories\ProductRepository;
 use App\Repositories\Repository;
+use App\Slide;
 use App\Status;
 use App\User;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Carbon;
@@ -27,9 +29,9 @@ use Session;
 
 class HomeController
 {
-    protected $category, $product, $color, $comment, $user, $image_feedback, $status, $order, $order_detail;
+    protected $category, $product, $color, $comment, $user, $image_feedback, $status, $order, $order_detail, $slide;
 
-    public function __construct(Category $category, Product $product, Color $color, Comment $comment, User $user, ImageFeedback $image_feedback, Status $status, Order $order, OrderDetail $order_detail)
+    public function __construct(Category $category, Product $product, Color $color, Comment $comment, User $user, ImageFeedback $image_feedback, Status $status, Order $order, OrderDetail $order_detail, Slide $slide)
     {
         $this->category = new Repository($category);
         $this->product = new ProductRepository($product);
@@ -40,6 +42,7 @@ class HomeController
         $this->status = new Repository($status);
         $this->order = new Repository($order);
         $this->order_detail = new Repository($order_detail);
+        $this->slide = new Repository($slide);
     }
 
     public function index()
@@ -264,6 +267,22 @@ class HomeController
         $customer_info = session()->get('customer_info');
         $order = session()->get('order')[0];
         if ($order != null) {
+            $client = new Client([
+                'headers' => [
+                    'content-type' => 'application/json',
+                    'Accept' => 'application/json'
+                ]
+            ]);
+
+            $response = $client->request('POST', 'http://localhost/sale_phone/public/api/create-payment', [
+                'json' => [
+                    'order' => $order,
+                ]
+            ]);
+
+            $data1 = $response->getBody();
+            $data1 = json_decode($data1);
+            dd($data1);
             $order_details = $this->order_detail->findThrough('order_id', $order[0]->id);
             return view('client.order_info', compact('customer_info', 'order', 'order_details'));
         } else {
@@ -303,5 +322,39 @@ class HomeController
         return response()->json([
             'redirect' => route('home.index')
         ]);
+    }
+
+    public function searchItem(Request $request)
+    {
+        $items = $request->items ?? 10;
+        $products = $this->product->all($items);
+        $key = $request->searchData;
+        if ($request->ajax()) {
+            return response()->json([
+                'products' => $products,
+            ]);
+        } else {
+            return redirect()->route('search-result', $key);
+        }
+
+    }
+
+    public function resultSearch($key)
+    {
+        $fieldName = 'name_phone';
+        $result_search = $this->product->search($fieldName, $key)->orWhere('title', 'LIKE', '%' . $key . '%')->get();
+        $today = Carbon::now();
+        $start_promotion = DB::table('products')->select('start_promotion')->get()[0];
+        $end_promotion = DB::table('products')->select('end_promotion')->get()[0];
+        $start = (array)$start_promotion;
+        $end = (array)$end_promotion;
+        return view('client.search', compact('result_search', 'key', 'start', 'end', 'today'));
+    }
+
+    public function slide()
+    {
+        $items = $request->items ?? 3;
+        $slides = $this->slide->all($items);
+        return view('client.slide', compact('slides'));
     }
 }

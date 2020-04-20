@@ -62,7 +62,7 @@
                     <p>Bảo hành: {{$product->warranty}}</p>
                     <p>Thời gian khuyến mãi: {{$product->start_promotion->format('d/m/Y')}}
                         - {{$product->end_promotion->format('d/m/Y')}}</p>
-                    <p class="add-cart text-center"><a href="{{route('order.item')}}">Đặt hàng online</a></p>
+                    <p class="add-cart text-center"><a href="{{route('cart',$product->id)}}">Đặt hàng online</a></p>
                 </div>
             </div>
         </div>

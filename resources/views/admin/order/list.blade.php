@@ -32,14 +32,11 @@
                         <th>ID</th>
                         <th>Customer Name</th>
                         <th>Customer Phone</th>
-                        <th>Customer Email</th>
                         <th>Status</th>
                         <th>Deliverer</th>
                         <th>Total Price</th>
                         <th>Delivery Address</th>
-                        <th>Note</th>
                         <th>Date Created</th>
-                        <th>Date Updated</th>
                         <th colspan="3">Action</th>
                     </tr>
                     </thead>
@@ -50,26 +47,21 @@
                                 <td id="order_id_{{$order->id}}">{{$order->id}}</td>
                                 <td id="customer_name_{{$order->id}}">{{$order->customer_name}}</td>
                                 <td id="customer_phone_{{$order->id}}">{{$order->customer_phone}}</td>
-                                <td id="customer_email_{{$order->id}}">{{$order->customer_email}}</td>
                                 <td id="status_id_{{$order->id}}">{{isset($order->status)? $order->status->status_name:''}}</td>
                                 <td id="deliverer_id_{{$order->id}}">{{isset($order->deliverer)? $order->deliverer->deliverer_name:''}}</td>
                                 <td id="total_price_{{$order->id}}">{{number_format($order->total_price)}}</td>
                                 <td id="delivery_address_{{$order->id}}">{{$order->delivery_address}}</td>
-                                <td id="note_{{$order->id}}">{{$order->note}}</td>
                                 <td id="created_at_{{$order->id}}">{{$order->created_at->format('d/m/Y')}}</td>
-                                <td id="updated_at_{{$order->id}}">{{$order->updated_at->format('d/m/Y')}}</td>
                                 <td>
                                     <a href="javascript:void(0)" id="add-detail-order"
                                        class="btn btn-primary add-detail-order" data-id="{{$order->id}}"><span
                                             class="mdi mdi-plus" aria-hidden="true"></span>
-                                        <span><strong>Order Detail</strong></span>
-
-                                        <a href="javascript:void(0)" id="detail-order"
-                                           data-id="{{$order->id}}"
-                                           class="btn btn-warning detail-order a-btn-slide-text">
-                                            <span class="mdi mdi-book" aria-hidden="true"></span>
-                                            <span><strong>Detail</strong></span>
-                                        </a>
+                                        <span><strong>Order Detail</strong></span></a>
+                                    <a href="javascript:void(0)" id="detail-order" data-id="{{$order->id}}"
+                                       class="btn btn-warning detail-order a-btn-slide-text">
+                                        <span class="mdi mdi-book" aria-hidden="true"></span>
+                                        <span><strong>Detail</strong></span>
+                                    </a>
                                 </td>
                                 <td>
                                     @can('order-edit')
@@ -159,11 +151,11 @@
                                 contentType: false,
                                 processData: false,
                                 success: function (data) {
-                                    var dataItem = '<tr id="id_' + data.id + '"><td>' + data.id + '</td><td>' + data.customer_name +
-                                        '</td><td>' + data.customer_phone + '</td><td>' + data.customer_email + '</td><td>' + data.status_id + '</td><td>' + data.deliverer_id + '</td><td>' + data.total_price +
-                                        '</td><td>' + data.delivery_address + '</td><td>' + data.created_at + '</td><td>' + data.updated_at + '</td>';
-                                    dataItem += '<td><a href="javascript:void(0)" id="edit-order" data-id="' + data.id + '" class="btn btn-success mr-2">Update</a></td>';
-                                    dataItem += '<td><a href="javascript:void(0)" id="delete-order" data-id="' + data.id + '" class="btn btn-danger delete-user ml-1">Delete</a></td></tr>';
+                                    var dataItem = '<tr id="id_' + data.orders.id + '"><td>' + data.orders.id + '</td><td>' + data.orders.customer_name +
+                                        '</td><td>' + data.orders.customer_phone +  '</td><td>' + data.status.status_name + '</td><td>' + data.deliverer.deliverer_name + '</td><td>' + data.orders.total_price +
+                                        '</td><td>' + data.orders.delivery_address + '</td><td>' + data.orders.created_at + '</td>';
+                                    dataItem += '<td><a href="javascript:void(0)" id="edit-order" data-id="' + data.orders.id + '" class="btn btn-success mr-2">Update</a></td>';
+                                    dataItem += '<td><a href="javascript:void(0)" id="delete-order" data-id="' + data.orders.id + '" class="btn btn-danger delete-user ml-1">Delete</a></td></tr>';
                                     $('#listItem').append(dataItem);
                                     $('#ajax-crud-modal').modal('hide');
                                     $('#addForm').trigger("reset");
@@ -202,16 +194,13 @@
                                 contentType: false,
                                 processData: false,
                                 success: function (data) {
-                                    $("#customer_name_" + data.id).html(data.customer_name);
-                                    $("#customer_phone_" + data.id).html(data.customer_phone);
-                                    $("#customer_email_" + data.id).html(data.customer_email);
-                                    $("#status_id_" + data.id).html(data.status_id);
-                                    $("#deliverer_id" + data.id).html(data.deliverer_id);
-                                    $("#total_price_" + data.id).html(data.total_price);
-                                    $("#delivery_address_" + data.id).html(data.delivery_address);
-                                    $("#note_" + data.id).html(data.note);
-                                    $("#created_at_" + data.id).html(data.created_at);
-                                    $("#updated_at_" + data.id).html(data.updated_at);
+                                    $("#customer_name_" + data.orders.id).html(data.orders.customer_name);
+                                    $("#customer_phone_" + data.orders.id).html(data.orders.customer_phone);
+                                    $("#status_id_" + data.orders.id).html(data.status.status_name);
+                                    $("#deliverer_id" + data.orders.id).html(data.deliverer.deliverer_name);
+                                    $("#total_price_" + data.orders.id).html(data.orders.total_price);
+                                    $("#delivery_address_" + data.orders.id).html(data.orders.delivery_address);
+                                    $("#created_at_" + data.orders.id).html(data.orders.created_at);
                                     $('#ajax-crud-modal').modal('hide');
                                     $('#editForm').trigger("reset");
                                     $('#btn-savechanges').html('Save Changes');

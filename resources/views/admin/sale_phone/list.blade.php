@@ -125,9 +125,10 @@
                                 contentType: false,
                                 processData: false,
                                 success: function (data) {
-                                    var dataItem = '<tr id="id_' + data.id + '"><td>' + data.id + '</td><td>' + data.phone_id + '</td><td>' + data.quantity + '</td><td>' + data.created_at + '</td><td>' + data.updated_at + '</td>';
-                                    dataItem += '<td><a href="javascript:void(0)" id="edit-sale_phone" data-id="' + data.id + '" class="btn btn-success mr-2">Update</a></td>';
-                                    dataItem += '<td><a href="javascript:void(0)" id="delete-sale_phone" data-id="' + data.id + '" class="btn btn-danger delete-user ml-1">Delete</a></td></tr>';
+                                    var dataItem = '<tr id="id_' + data.sale_phones.id + '"><td>' + data.sale_phones.id + '</td><td>' + data.product.name_phone + '</td><td>' + data.sale_phones.quantity
+                                        + '</td><td>' + data.sale_phones.created_at + '</td><td>' + data.sale_phones.updated_at + '</td>';
+                                    dataItem += '<td><a href="javascript:void(0)" id="edit-sale_phone" data-id="' + data.sale_phones.id + '" class="btn btn-success mr-2">Update</a></td>';
+                                    dataItem += '<td><a href="javascript:void(0)" id="delete-sale_phone" data-id="' + data.sale_phones.id + '" class="btn btn-danger delete-user ml-1">Delete</a></td></tr>';
                                     $('#listItem').append(dataItem);
                                     $('#ajax-crud-modal').modal('hide');
                                     $('#addForm').trigger("reset");
@@ -163,9 +164,9 @@
                                 processData: false,
                                 success: function (data) {
                                     $("#phone_id_" + data.id).html(data.phone_id);
-                                    $("#quantity_" + data.id).html(data.quantity);
-                                    $("#created_at_" + data.id).html(data.created_at);
-                                    $("#updated_at_" + data.id).html(data.updated_at);
+                                    $("#quantity_" + data.id).html(data.sale_phones.quantity);
+                                    $("#created_at_" + data.id).html(data.sale_phones.created_at);
+                                    $("#updated_at_" + data.id).html(data.sale_phones.updated_at);
                                     $('#ajax-crud-modal').modal('hide');
                                     $('#editForm').trigger("reset");
                                     $('#btn-savechanges').html('Save Changes');

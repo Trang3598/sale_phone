@@ -7,6 +7,7 @@ use App\Exports\ProductsExport;
 use App\Http\Requests\ProductRequest;
 use App\Product;
 use App\Repositories\ProductRepository;
+use App\Repositories\Repository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
@@ -15,11 +16,13 @@ use Maatwebsite\Excel\Facades\Excel;
 class ProductController extends Controller
 {
     protected $product;
+    protected $category;
 
-    public function __construct(Product $product)
+    public function __construct(Product $product, Category $category)
     {
         parent::__construct();
         $this->product = new ProductRepository($product);
+        $this->category = new Repository($category);
         $this->middleware('permission:product-list');
         $this->middleware('permission:product-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:product-edit', ['only' => ['edit', 'update']]);
@@ -51,7 +54,13 @@ class ProductController extends Controller
             $data['thumbnail'] = $thumbnail;
         }
         $products = $this->product->create($data);
-        return Response::json($products);
+        $category = $this->category->find($request->id_cate);
+        if ($request->sale_phone == 1) {
+            $sale_phone = "Best Seller";
+        } else {
+            $sale_phone = "Unmarketable";
+        }
+        return Response::json(["products" => $products, 'category' => $category, 'sale_phone' => $sale_phone]);
     }
 
     public function show($id)
@@ -78,7 +87,13 @@ class ProductController extends Controller
             $data['thumbnail'] = $thumbnail;
         }
         $products = $this->product->update($id, $data);
-        return Response::json($products);
+        $category = $this->category->find($request->id_cate);
+        if ($request->sale_phone == 1) {
+            $sale_phone = "Best Seller";
+        } else {
+            $sale_phone = "Unmarketable";
+        }
+        return Response::json(["products" => $products, 'category' => $category, 'sale_phone' => $sale_phone]);
     }
 
     public function destroy($id)
@@ -103,32 +118,19 @@ class ProductController extends Controller
                 $check = ($product->sale_phone == 1) ? 'Best Seller' : 'Unmarketable';
                 $buttonUpdate = '<div class="btn-edit"> <a href="javascript:void(0)" class="edit-product btn btn-success" data-id= "' . $product->id . '">Update</a></div>';
                 $buttonDelete = '<a href="javascript:void(0)" id="delete-product" class="btn btn-danger delete-product" data-id="' . $product->id . '">Delete</a>';
+                $buttonImage = '<a href="javascript:void(0)" id="image-product"
+                                   data-id="' . $product->id . '"
+                                   class="image-product btn btn-primary">Image</a>';
                 $output .= '<tr>' .
                     '<td>' . $product->id . '</td>' .
                     '<td>' . $product->category->category_name . '</td>' .
+                    '<td><img src="images/' . $product->thumbnail . '" alt="" style="height:50px;width: 50px" class="img-responsive"/></td>' .
                     '<td>' . $product->name_phone . '</td>' .
-                    '<td>' . $product->title . '</td>' .
-                    '<td>' . $product->description . '</td>' .
                     '<td>' . $product->quantity . '</td>' .
-                    '<td>' . $product->detail . '</td>' .
                     '<td>' . $product->price . '</td>' .
-                    '<td>' . $product->size . '</td>' .
-                    '<td>' . $product->memory . '</td>' .
-                    '<td>' . $product->weight . '</td>' .
-                    '<td>' . $product->cpu_speed . '</td>' .
-                    '<td>' . $product->ram . '</td>' .
-                    '<td>' . $product->os . '</td>' .
-                    '<td>' . $product->camera_primary . '</td>' .
-                    '<td>' . $product->battery . '</td>' .
-                    '<td>' . $product->warranty . '</td>' .
-                    '<td>' . $product->bluetooth . '</td>' .
-                    '<td>' . $product->wlan . '</td>' .
-                    '<td>' . $product->promotion_price . '</td>' .
-                    '<td>' . $product->start_promotion->format('d/m/Y') . '</td>' .
-                    '<td>' . $product->end_promotion->format('d/m/Y') . '</td>' .
                     '<td>' . $check . '</td>' .
                     '<td>' . $product->created_at->format('d/m/Y') . '</td>' .
-                    '<td>' . $product->updated_at->format('d/m/Y') . '</td>' .
+                    '<td>' . $buttonImage . '</td>' .
                     '<td>' . $buttonUpdate . '</td>' .
                     '<td>' . $buttonDelete . '</td>' .
                     '</tr>';

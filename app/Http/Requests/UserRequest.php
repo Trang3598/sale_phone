@@ -30,7 +30,7 @@ class UserRequest extends FormRequest
             'full_name' => 'required|min:5',
             'password' => 'required|min:5|required_with:confirm|same:confirm|alpha_num',
             'confirm' => 'required|min:5|same:password|alpha_num',
-            'avatar' => 'image|max:2000|unique:users,avatar',
+            'avatar' => 'image|mimes:jpeg,jpg,png,gif|max:2000|unique:users,avatar',
             'phone_number' => 'required|numeric|unique:users|digits_between:1,10',
         ];
         if ($this->user) {

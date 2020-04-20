@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
+
 class PermissionTableSeeder extends Seeder
 {
     /**
@@ -60,7 +61,11 @@ class PermissionTableSeeder extends Seeder
             'status-create',
             'status-edit',
             'status-delete',
-            'user-account'
+            'user-account',
+            'slide-list',
+            'slide-create',
+            'slide-edit',
+            'slide-delete',
         ];
 
 

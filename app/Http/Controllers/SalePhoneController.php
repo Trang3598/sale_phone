@@ -13,14 +13,16 @@ use Illuminate\Support\Facades\Response;
 class SalePhoneController extends Controller
 {
     protected $sale_phone;
+    protected $product;
 
-    public function __construct(SalePhone $sale_phone)
+    public function __construct(SalePhone $sale_phone, Product $product)
     {
         parent::__construct();
         $this->sale_phone = new Repository($sale_phone);
+        $this->product = new Repository($product);
         $this->middleware('permission:sale_phone-list');
-        $this->middleware('permission:sale_phone-create', ['only' => ['create','store']]);
-        $this->middleware('permission:sale_phone-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:sale_phone-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:sale_phone-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:sale_phone-delete', ['only' => ['destroy']]);
     }
 
@@ -29,7 +31,7 @@ class SalePhoneController extends Controller
         $items = $request->items ?? 10;
         $count = $this->sale_phone->all($items)->total();
         $sale_phones = $this->sale_phone->all($items);
-        return view('admin.sale_phone.list', compact('sale_phones','count'));
+        return view('admin.sale_phone.list', compact('sale_phones', 'count'));
     }
 
     public function create()
@@ -42,7 +44,8 @@ class SalePhoneController extends Controller
     public function store(SalePhoneRequest $request)
     {
         $sale_phones = $this->sale_phone->create($request->all());
-        return Response::json($sale_phones);
+        $product = $this->product->find($request->phone_id);
+        return Response::json(["sale_phones" => $sale_phones, 'product' => $product]);
     }
 
     public function show($id)
@@ -62,7 +65,8 @@ class SalePhoneController extends Controller
     public function update($id, SalePhoneRequest $request)
     {
         $sale_phones = $this->sale_phone->update($id, $request->all());
-        return Response::json($sale_phones);
+        $product = $this->product->find($request->phone_id);
+        return Response::json(["sale_phones" => $sale_phones, 'product' => $product]);
     }
 
     public function destroy($id)

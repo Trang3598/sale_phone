@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Cart;
 use App\Category;
+use App\Slide;
 use Illuminate\Support\Facades\DB;
 use Session;
 use Illuminate\Support\ServiceProvider;
@@ -29,6 +30,8 @@ class AppServiceProvider extends ServiceProvider
     {
         $categories = Category::all();
         View::share('categories', $categories);
+        $slides = Slide::all();
+        View::share('slides', $slides);
         view()->composer(['client.master', 'client.cart'], function ($view) {
             if (Session('cart')) {
                     $oldCart = Session::get('cart');

@@ -1,4 +1,17 @@
 @extends('client.master')
+<style>
+    @media screen and (max-width: 400px) {
+        #paypal-button-container {
+            width: 100%;
+        }
+    }
+
+    @media screen and (min-width: 400px) {
+        #paypal-button-container {
+            width: 250px;
+        }
+    }
+</style>
 @section('title','Thank')
 @section('main')
     <link rel="stylesheet" href="{{asset('client/css/order_info.css')}}">
@@ -51,16 +64,42 @@
                     </div>
                     <p>(Có Internet Banking)</p>
                 </a>
-                <a href="javascript:void(0)" class="visa">
-
-                    <div>
-                        <span>Thanh toán thẻ </span>
-                        <img src="{{asset('client/img/home/visa.png')}}"
-                             alt="Thanh toán qua thẻ Visa, Master Card">
-                        <img src="{{asset('client/img/home/master.png')}}"
-                             alt="Thanh toán qua thẻ Visa, Master Card">
-                    </div>
-                </a>
+                    <div id="paypal-button-container"></div>
+                    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+                    <script>
+                        paypal.Button.render({
+                            env: 'sandbox', // Or 'production'
+                            // Set up the payment:
+                            // 1. Add a payment callback
+                            style: {
+                                color:  'blue',
+                                label:  'pay',
+                                shape: '',
+                                height: 40,
+                                width:270,
+                            },
+                            payment: function(data, actions) {
+                                // 2. Make a request to your server
+                                return actions.request.post('/api/create-payment')
+                                    .then(function(res) {
+                                        // 3. Return res.id from the response
+                                        return res.id;
+                                    });
+                            },
+                            // Execute the payment:
+                            // 1. Add an onAuthorize callback
+                            onAuthorize: function(data, actions) {
+                                // 2. Make a request to your server
+                                return actions.request.post('/api/execute-payment', {
+                                    paymentID: data.paymentID,
+                                    payerID:   data.payerID
+                                })
+                                    .then(function(res) {
+                                        // 3. Show the buyer a confirmation message.
+                                    });
+                            }
+                        }, '#paypal-button-container');
+                    </script>
                 <input type="hidden" value="0" name="payment" class="payment">
             </div>
         </div>
@@ -69,9 +108,6 @@
         </div>
         <div class="callship">
             Khi cần hỗ trợ vui lòng gọi <a href="tel:0357589900">035.758.9900</a> (7h30 - 22h)
-{{--            <div class="link-csht">--}}
-{{--                <a href="javascript:void(0)">Tham khảo chính sách hoàn tiền khi thanh toán online</a>--}}
-{{--            </div>--}}
         </div>
         <div class="titlebill">Sản phẩm đã mua:</div>
         <ul class="listorder">

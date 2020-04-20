@@ -409,9 +409,11 @@ ul, ol {
     margin-bottom: 20px;
     box-shadow: 0 0 20px rgba(0, 0, 0, .15);
 }
+
 .infoorder div strong {
     color: #c10017;
 }
+
 .mess-payment {
     display: none;
     overflow: hidden;
@@ -421,4 +423,15 @@ ul, ol {
     background-color: #e3f6de;
     margin: 10px 20px;
     border-radius: 3px;
+}
+
+#paypal-button {
+    float: left;
+    overflow: hidden;
+    width: 270px;
+    line-height: normal;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 15px 0
 }

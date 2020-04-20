@@ -88,7 +88,7 @@
                             <td>
                                 <a href="javascript:void(0)" id="image-product"
                                    data-id="{{$product->id}}"
-                                   class="image-product btn btn-primary">Watch</a>
+                                   class="image-product btn btn-primary">Image</a>
                             </td>
                             @can('product-edit')
                                 <td>
@@ -179,12 +179,14 @@
                             contentType: false,
                             processData: false,
                             success: function (data) {
-                                var dataItem = '<tr id="id_' + data.id + '"><td id = "product_id_">' + data.id + '</td><td id="id_cate_">' + data.id_cate + '</td><td id="thumbnail_' + data.id + '"><img src = "images/' + data.thumbnail + '" alt ="" style="height:50px;width: 50px" class="img-responsive" />' + '</td><td id="name_phone_">' + data.name_phone + '</td><td id="quantity_">' + data.quantity +
-                                    '</td><td id="price_">' + data.price + '</td><td id = "sale_phone_">' + data.sale_phone + '</td><td id = "created_at_">' + data.created_at
+                                var dataItem = '<tr id="id_' + data.products.id + '"><td id = "product_id_">' + data.products.id + '</td><td id="id_cate_">' + data.category.category_name +
+                                    '</td><td id="thumbnail_' + data.products.id + '"><img src = "images/' + data.products.thumbnail + '" alt ="" style="height:50px;width: 50px" class="img-responsive" />'
+                                    + '</td><td id="name_phone_">' + data.products.name_phone + '</td><td id="quantity_">' + data.products.quantity +
+                                    '</td><td id="price_">' + data.products.price + '</td><td id = "sale_phone_">' + data.sale_phone + '</td><td id = "created_at_">' + data.products.created_at
                                     + '</td>';
-                                dataItem += '<td><a href="javascript:void(0)" id="image-product" data-id="' + data.id + '" class="image-product btn btn-primary">Watch</a></td>';
-                                dataItem += '<td><a href="javascript:void(0)" id="edit-product" data-id="' + data.id + '" class="btn btn-success mr-2 edit-product">Update</a></td>';
-                                dataItem += '<td><a href="javascript:void(0)" id="delete-product" data-id="' + data.id + '" class="btn btn-danger delete-user ml-1">Delete</a></td></tr>';
+                                dataItem += '<td><a href="javascript:void(0)" id="image-product" data-id="' + data.products.id + '" class="image-product btn btn-primary">Watch</a></td>';
+                                dataItem += '<td><a href="javascript:void(0)" id="edit-product" data-id="' + data.products.id + '" class="btn btn-success mr-2 edit-product">Update</a></td>';
+                                dataItem += '<td><a href="javascript:void(0)" id="delete-product" data-id="' + data.products.id + '" class="btn btn-danger delete-user ml-1">Delete</a></td></tr>';
                                 $('#listItem').append(dataItem);
                                 $('#ajax-crud-modal').modal('hide');
                                 $('#addForm').trigger("reset");
@@ -238,31 +240,13 @@
                                 contentType: false,
                                 processData: false,
                                 success: function (data) {
-                                    $("#id_cate_" + data.id).html(data.id_cate);
-                                    $("#name_phone_" + data.id).html(data.name_phone);
-                                    $("#thumbnail_" + data.id).attr('src', 'images/' + data.thumbnail);
-                                    $("#title_" + data.id).html(data.title);
-                                    $("#description_" + data.id).html(data.description);
-                                    $("#quantity_" + data.id).html(data.quantity);
-                                    $("#detail_" + data.id).html(data.detail);
-                                    $("#price_" + data.id).html(data.price);
-                                    $("#size_" + data.id).html(data.size);
-                                    $("#memory_" + data.id).html(data.memory);
-                                    $("#weight_" + data.id).html(data.weight);
-                                    $("#cpu_speed_" + data.id).html(data.cpu_speed);
-                                    $("#ram_" + data.id).html(data.ram);
-                                    $("#os_" + data.id).html(data.os);
-                                    $("#camera_primary_" + data.id).html(data.camera_primary);
-                                    $("#battery_" + data.id).html(data.battery);
-                                    $("#wlan_" + data.id).html(data.wlan);
-                                    $("#warranty_" + data.id).html(data.warranty);
-                                    $("#bluetooth_" + data.id).html(data.bluetooth);
-                                    $("#promotion_price_" + data.id).html(data.promotion_price);
-                                    $("#start_promotion" + data.id).html(data.start_promotion);
-                                    $("#end_promotion_" + data.id).html(data.end_promotion);
-                                    $("#sale_phone_" + data.id).html(data.sale_phone);
-                                    $("#created_at_" + data.id).html(data.created_at);
-                                    $("#updated_at_" + data.id).html(data.updated_at);
+                                    $("#id_cate_" + data.products.id).html(data.category.name_phone);
+                                    $("#name_phone_" + data.products.id).html(data.products.name_phone);
+                                    $("#thumbnail_" + data.products.id).attr('src', 'images/' + data.products.thumbnail);
+                                    $("#quantity_" + data.products.id).html(data.products.quantity);
+                                    $("#price_" + data.products.id).html(data.products.price);
+                                    $("#sale_phone_" + data.products.id).html(data.sale_phone);
+                                    $("#created_at_" + data.products.id).html(data.products.created_at);
                                     $('#ajax-crud-modal').modal('hide');
                                     $('#editForm').trigger("reset");
                                     $('#btn-savechanges').html('Save Changes');
@@ -377,7 +361,7 @@
                 });
             </script>
             <script type="text/javascript">
-                $('#search').keyup(function () {
+                $('#search').change(function () {
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
