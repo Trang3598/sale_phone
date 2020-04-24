@@ -32,9 +32,6 @@
                         <th>ID</th>
                         <th>Username</th>
                         <th>Avatar</th>
-                        <th>Fullname</th>
-                        <th>Email</th>
-                        <th>Phone Number</th>
                         <th>Roles</th>
                         <th>Date Created</th>
                         @can('user-edit','user-delete')
@@ -48,11 +45,8 @@
                             <tr id="id_{{ $user->id }}">
                                 <td id="user_id_{{$user->id}}">{{$user->id}}</td>
                                 <td id="username_{{$user->id}}">{{isset($user->username) ? $user->username :''}}</td>
-                                <td id="avatar_{{$user->id}}"><img src="images/{{$user->avatar}}"
-                                                                   style="width: 100px;height:100px"></td>
-                                <td id="full_name_{{$user->id}}">{{isset($user->full_name)? $user->full_name:''}}</td>
-                                <td id="email_{{$user->id}}">{{isset($user->email)? $user->email : ''}}</td>
-                                <td id="phone_number_{{$user->id}}">{{isset($user->phone_number) ?$user->phone_number:''}}</td>
+                                <td><img id="avatar_{{$user->id}}" src="images/{{$user->avatar}}"
+                                         style="width: 100px;height:100px"></td>
                                 <td id="role_{{$user->id}}">
                                     @if(!empty($user->getRoleNames()))
                                         @foreach($user->getRoleNames() as $v)
@@ -146,12 +140,12 @@
                                 contentType: false,
                                 processData: false,
                                 success: function (data) {
-                                    var dataItem = '<tr id="id_' + data.id + '"><td>' + data.users.id + '</td><td>' + data.users.username + '</td><td>' +
+                                    console.log(data.role_data[0]);
+                                    var dataItem = '<tr id="id_' + data.users.id + '"><td>' + data.users.id + '</td><td id="username_' + data.users.id + '">' + data.users.username + '</td><td>' +
                                         '<img id="avatar_' + data.users.id + '"  src = "images/' + data.users.avatar + '" alt ="" style="height:100px;width:100px" class="img-responsive" />' +
-                                        '</td><td>' + data.users.full_name + '</td><td>' + data.users.email +
-                                        '</td><td>' + data.phone_number + '</td><td>' + data.roles + '</td><td>' + data.created_at + '</td>';
-                                    dataItem += '<td><a href="javascript:void(0)" id="edit-user" data-id="' + data.id + '" class="btn btn-success mr-2">Update</a></td>';
-                                    dataItem += '<td><a href="javascript:void(0)" id="delete-user" data-id="' + data.id + '" class="btn btn-danger delete-user ml-1">Delete</a></td></tr>';
+                                        '</td><td><label class="badge badge-success">' + data.role_data[0].name + '</label></td><td>' + data.users.created_at + '</td>';
+                                    dataItem += '<td><a href="javascript:void(0)" id="" data-id="' + data.users.id + '" class="edit-user btn btn-success mr-2">Update</a></td>';
+                                    dataItem += '<td><a href="javascript:void(0)" id="delete-user" data-id="' + data.users.id + '" class="btn btn-danger delete-user ml-1">Delete</a></td></tr>';
                                     $('#listItem').append(dataItem);
                                     $('#ajax-crud-modal').modal('hide');
                                     $('#addForm').trigger("reset");
@@ -190,14 +184,11 @@
                                 contentType: false,
                                 processData: false,
                                 success: function (data) {
-                                    $("#username_" + data.id).html(data.username);
-                                    $("#avatar_" + data.id).attr('src', 'images/' + data.avatar);
-                                    $("#full_name_" + data.id).html(data.full_name);
-                                    $("#email_" + data.id).html(data.email);
-                                    $("#phone_number_" + data.id).html(data.phone_number);
-                                    $("#role_" + data.id).html(data.roles);
-                                    $("#created_at_" + data.id).html(data.created_at);
-                                    $("#updated_at_" + data.id).html(data.updated_at);
+                                    console.log(data.role_data[0]);
+                                    $("#username_" + data.users.id).html(data.users.username)
+                                    $("#avatar_" + data.users.id).attr('src', 'images/' + data.users.avatar);
+                                    $("#role_" + data.users.id).html('<label class="badge badge-success">' + data.role_data[0] + '</label>');
+                                    $("#created_at_" + data.users.id).html(data.users.created_at);
                                     $('#ajax-crud-modal').modal('hide');
                                     $('#editForm').trigger("reset");
                                     $('#btn-savechanges').html('Save Changes');
@@ -237,7 +228,7 @@
                             });
                         }
                     });
-                    $('body').on('click', '#delete-category', function (event) {
+                    $('body').on('click', '#delete-user', function (event) {
                         event.preventDefault();
                         $.ajaxSetup({
                             headers: {

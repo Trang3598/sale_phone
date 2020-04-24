@@ -26,6 +26,22 @@
                     <span>{{$order->delivery_address}}</span>
                 </div>
                 <div class="form-group">
+                    <label>Payment: </label>
+                    <span>
+                        @if($order->payment == 1)
+                            Thanh toán bằng tiền mặt khi nhận hàng
+                            @elseif($order->payment == 2)
+                            Thanh toán bằng cà thẻ khi nhận hàng
+                            @elseif($order->payment == 0)
+                            Chưa chọn hình thức thanh toán
+                            @elseif($order->payment == 3)
+                            Thanh toán qua thẻ ATM(Có Internet Banking)
+                            @else
+                            Thanh toán qua Paypal
+                        @endif
+                    </span>
+                </div>
+                <div class="form-group">
                     <label>Note: </label>
                     <span>{{$order->note}}</span>
                 </div>
@@ -47,6 +63,7 @@
                         <tr class="text-center">
                             <th>ID</th>
                             <th>Product Name</th>
+                            <th>Color</th>
                             <th>Quantity</th>
                             <th>Price</th>
                             <th colspan="2">Action</th>
@@ -56,7 +73,8 @@
                         @foreach($order_details as $order_detail)
                             <tr id="id_{{$order_detail->id}}">
                                 <td id="order_detail_id_{{$order_detail->id}}">{{$order_detail->id}}</td>
-                                <td id="name_phone_{{$order_detail->id}}">{{$order_detail->name_phone}}</td>
+                                <td id="product_id_{{$order_detail->id}}">{{$order_detail->name_phone}}</td>
+                                <td id="color_id_{{$order_detail->id}}">{{$order_detail->color_name}}</td>
                                 <td id="sale_quantity_{{$order_detail->id}}">{{$order_detail->sale_quantity}}</td>
                                 <td id="price_{{$order_detail->id}}">{{number_format($order_detail->price)}}</td>
                                 @can('order_detail-edit')
@@ -77,8 +95,8 @@
                             </tr>
                         @endforeach
                         <tr>
-                            <td colspan="3"><b>Tổng tiền</b></td>
-                            <td colspan="3"><b class="text-red">{{ number_format($total_price) }} VNĐ</b></td>
+                            <td colspan="4"><b>Tổng tiền</b></td>
+                            <td colspan="4"><b class="text-red">{{ number_format($total_price) }} VNĐ</b></td>
                         </tr>
                         </tbody>
                     </table>

@@ -123,7 +123,7 @@
                                 processData: false,
                                 success: function (data) {
                                     var dataItem = '<tr id="id_' + data.id + '"><td>' + data.id + '</td><td>' + data.status_name + '</td><td>' + data.created_at + '</td><td>' + data.updated_at + '</td>';
-                                    dataItem += '<td><a href="javascript:void(0)" id="edit-status" data-id="' + data.id + '" class="btn btn-success mr-2">Update</a></td>';
+                                    dataItem += '<td><a href="javascript:void(0)" id="" data-id="' + data.id + '" class="edit-status btn btn-success mr-2">Update</a></td>';
                                     dataItem += '<td><a href="javascript:void(0)" id="delete-status" data-id="' + data.id + '" class="btn btn-danger delete-user ml-1">Delete</a></td></tr>';
                                     $('#listItem').append(dataItem);
                                     $('#ajax-crud-modal').modal('hide');

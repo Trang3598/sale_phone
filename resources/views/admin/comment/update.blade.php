@@ -35,18 +35,10 @@
                     <div class="form-group">
                         <label class="col-sm-12">Comment Content</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="comment_content" name="comment_content" value="{{$comment->comment_content}}">
+                            <input type="text" class="form-control" id="comment_content" name="comment_content"
+                                   value="{{$comment->comment_content}}">
                             <span class="text-danger">
                                 <strong id="comment_content-error"></strong>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="form-group" id="phone_number_input">
-                        <label class="col-sm-12">Phone Number</label>
-                        <div class="col-sm-12">
-                            <input type="number" class="form-control" id="phone_number" name="phone_number" value="{{$comment->phone_number}}">
-                            <span class="text-danger">
-                                <strong id="phone_number-error"></strong>
                             </span>
                         </div>
                     </div>

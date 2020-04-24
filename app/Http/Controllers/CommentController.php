@@ -14,15 +14,19 @@ use Illuminate\Support\Facades\Response;
 class CommentController extends Controller
 {
     protected $comment;
+    protected $product;
+    protected $user;
 
-    public function __construct(Comment $comment)
+    public function __construct(Comment $comment, User $user, Product $product)
     {
         parent::__construct();
         $this->middleware('permission:comment-list');
-        $this->middleware('permission:comment-create', ['only' => ['create','store']]);
-        $this->middleware('permission:comment-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:comment-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:comment-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:comment-delete', ['only' => ['destroy']]);
         $this->comment = new Repository($comment);
+        $this->user = new Repository($user);
+        $this->product = new Repository($product);
     }
 
     public function index()
@@ -30,7 +34,7 @@ class CommentController extends Controller
         $items = $request->items ?? 10;
         $count = $this->comment->all($items)->total();
         $comments = $this->comment->all($items);
-        return view('admin.comment.list', compact('comments','count','items'));
+        return view('admin.comment.list', compact('comments', 'count', 'items'));
     }
 
     public function create()
@@ -45,7 +49,9 @@ class CommentController extends Controller
     public function store(CommentRequest $request)
     {
         $comments = $this->comment->create($request->all());
-        return Response::json($comments);
+        $product = $this->product->find($request->product_id);
+        $user = $this->user->find($request->user_id);
+        return Response::json(['comments' => $comments, 'product' => $product, 'user' => $user]);
     }
 
     public function show($id)
@@ -67,7 +73,9 @@ class CommentController extends Controller
     public function update($id, CommentRequest $request)
     {
         $comments = $this->comment->update($id, $request->all());
-        return Response::json($comments);
+        $product = $this->product->find($request->product_id);
+        $user = $this->user->find($request->user_id);
+        return Response::json(['comments' => $comments, 'product' => $product, 'user' => $user]);
     }
 
     public function destroy($id)
@@ -81,7 +89,7 @@ class CommentController extends Controller
         if ($request->ajax()) {
             $output = "";
             $key = $request->all()['key'];
-            $comments = $this->comment->with(['product','user'])
+            $comments = $this->comment->with(['product', 'user'])
                 ->join('products', 'comments.product_id', '=', 'products.id')
                 ->join('users', 'comments.user_id', '=', 'users.id')
                 ->where('products.name_phone', 'like', '%' . $key . '%')->orWhere('phone_number', 'like', '%' . $key . '%')->orWhere('username', 'like', '%' . $key . '%')

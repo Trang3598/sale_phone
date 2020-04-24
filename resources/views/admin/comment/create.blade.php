@@ -41,15 +41,6 @@
                             </span>
                         </div>
                     </div>
-                    <div class="form-group" id="phone_number_input">
-                        <label class="col-sm-12">Phone Number</label>
-                        <div class="col-sm-12">
-                            <input type="number" class="form-control" id="phone_number" name="phone_number">
-                            <span class="text-danger">
-                                <strong id="phone_number-error"></strong>
-                            </span>
-                        </div>
-                    </div>
                 </form>
             </div>
             <div class="modal-footer">

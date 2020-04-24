@@ -54,7 +54,11 @@ class UserController extends Controller
         }
         $users = $this->user->create($data);
         $users->assignRole($request->input('roles'));
-        return Response::json($users);
+        $role_data = [];
+        foreach ($users->roles as $item) {
+            array_push($role_data, $item);
+        }
+        return Response::json(['users' => $users,'role_data' => $role_data]);
     }
 
     public function show($id)

@@ -20,6 +20,16 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-12">Color</label>
+                        <div class="col-sm-12">
+                            <select name="color_id" class="form-control" id="selectColor">
+                            </select>
+                            <span class="text-danger">
+                                <strong id="color_id-error"></strong>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-12">Sale quantity</label>
                         <div class="col-sm-12">
                             <input type="number" class="form-control" id="sale_quantity" name="sale_quantity"
@@ -44,7 +54,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="add_order_detail" value="add_order_detail">Save changes
+                <button type="button" class="btn btn-primary" id="add_order_detail" value="add_order_detail">Save
+                    changes
                 </button>
                 <button type="button" class="btn btn-default" id="btn-back" value="back">Back
                 </button>

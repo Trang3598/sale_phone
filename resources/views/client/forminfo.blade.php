@@ -1,4 +1,4 @@
-<div class="modal fade" id="ajax-crud-modal" aria-hidden="true" data-backdrop="false" tabindex="-1" role="dialog">
+<div class="modal fade" id="ajax-crud-modal" aria-hidden="true" data-backdrop="false"  role="dialog" style="background-color: rgba(0, 0, 0, .5)">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
+use Session;
 
 class Repository implements AbstractRepositoryInterface
 {
@@ -92,5 +93,10 @@ class Repository implements AbstractRepositoryInterface
     {
         $result = $this->model->where($fieldName, $param)->paginate(12);
         return $result;
+    }
+
+    public function getItemCart()
+    {
+        
     }
 }

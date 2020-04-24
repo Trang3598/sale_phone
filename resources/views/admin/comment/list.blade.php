@@ -33,9 +33,7 @@
                         <th>User</th>
                         <th>Products</th>
                         <th>Comment Content</th>
-                        <th>Phone Number</th>
                         <th>Date Created</th>
-                        <th>Date Updated</th>
                         @can('comment-edit','comment-delete')
                             <th colspan="2">Action</th>
                         @endcan
@@ -49,9 +47,7 @@
                                 <td id="user_id_{{$comment->id}}">{{isset($comment->user_id)? $comment->user->username:'VISITOR'}}</td>
                                 <td id="product_id_{{$comment->id}}">{{isset($comment->product_id)? $comment->product->name_phone:''}}</td>
                                 <td id="comment_content_{{$comment->id}}">{{$comment->comment_content}}</td>
-                                <td id="phone_number_{{$comment->id}}">{{$comment->phone_number}}</td>
                                 <td id="created_at_{{$comment->id}}">{{$comment->created_at->format('d/m/Y')}}</td>
-                                <td id="updated_at_{{$comment->id}}">{{$comment->updated_at->format('d/m/Y')}}</td>
                                 @can('comment-edit')
                                     <td>
                                         <div class="btn-edit">
@@ -128,9 +124,12 @@
                                 contentType: false,
                                 processData: false,
                                 success: function (data) {
-                                    var dataItem = '<tr id="id_' + data.id + '"><td>' + data.id + '</td><td>' + data.user_id + '</td><td>' + data.product_id + '</td><td>' + data.comment_content + '</td><td>' + data.phone_number + '</td><td>' + data.created_at + '</td><td>' + data.updated_at + '</td>';
-                                    dataItem += '<td><a href="javascript:void(0)" id="edit-comment" data-id="' + data.id + '" class="btn btn-success mr-2">Update</a></td>';
-                                    dataItem += '<td><a href="javascript:void(0)" id="delete-comment" data-id="' + data.id + '" class="btn btn-danger delete-user ml-1">Delete</a></td></tr>';
+                                    var dataItem = '<tr id="id_' + data.comments.id + '"><td>' + data.comments.id + '</td><td id="user_id_' + data.comments.id + '">' + data.user.username
+                                        + '</td><td id="product_id_' + data.comments.id + '">' + data.product.name_phone + '</td><td id="comment_content_' + data.comments.id + '">'
+                                        + data.comments.comment_content  + '</td><td id="created_at_'
+                                        +data.comments.id +'">' + data.comments.created_at + '</td>';
+                                    dataItem += '<td><a href="javascript:void(0)" id="" data-id="' + data.comments.id  + '" class="edit-comment btn btn-success mr-2">Update</a></td>';
+                                    dataItem += '<td><a href="javascript:void(0)" id="delete-comment" data-id="' + data.comments.id + '" class="btn btn-danger delete-user ml-1">Delete</a></td></tr>';
                                     $('#listItem').append(dataItem);
                                     $('#ajax-crud-modal').modal('hide');
                                     $('#addForm').trigger("reset");
@@ -167,12 +166,10 @@
                                 contentType: false,
                                 processData: false,
                                 success: function (data) {
-                                    $("#user_id_" + data.id).html(data.user_id);
-                                    $("#product_id_" + data.id).html(data.product_id);
-                                    $("#comment_content_" + data.id).html(data.comment_content);
-                                    $("#phone_number_" + data.id).html(data.phone_number);
-                                    $("#created_at_" + data.id).html(data.created_at);
-                                    $("#updated_at_" + data.id).html(data.updated_at);
+                                    $("#user_id_" + data.comments.id).html(data.user.username);
+                                    $("#product_id_" +data.comments.id).html(data.product.name_phone);
+                                    $("#comment_content_" + data.comments.id).html(data.comments.comment_content);
+                                    $("#created_at_" +data.comments.id).html(data.comments.created_at);
                                     $('#ajax-crud-modal').modal('hide');
                                     $('#editForm').trigger("reset");
                                     $('#btn-savechanges').html('Save Changes');

@@ -124,9 +124,11 @@
                                 contentType: false,
                                 processData: false,
                                 success: function (data) {
-                                    var dataItem = '<tr id="id_' + data.id + '"><td>' + data.id + '</td><td>' + data.name_phone + '</td><td>' + data.color_name + '</td><td>' + data.created_at + '</td><td>' + data.updated_at + '</td>';
-                                    dataItem += '<td><a href="javascript:void(0)" id="edit-color" data-id="' + data.id + '" class="btn btn-success mr-2">Update</a></td>';
-                                    dataItem += '<td><a href="javascript:void(0)" id="delete-color" data-id="' + data.id + '" class="btn btn-danger delete-user ml-1">Delete</a></td></tr>';
+                                    console.log(data);
+                                    var dataItem = '<tr id="id_' + data.colors.id + '"><td>' + data.colors.id + '</td><td id="name_phone_' + data.colors.id + '">' + data.product.name_phone
+                                        + '</td><td id="color_name_'+data.colors.id+'">' + data.colors.color_name + '</td><td id="created_at_' + data.colors.id + '">' + data.colors.created_at + '</td><td id="updated_at_' + data.colors.id + '">' + data.colors.updated_at + '</td>';
+                                    dataItem += '<td><a href="javascript:void(0)" data-id="' + data.colors.id+ '" class=" edit-color btn btn-success mr-2">Update</a></td>';
+                                    dataItem += '<td><a href="javascript:void(0)" id="delete-color" data-id="' + data.colors.id + '" class="btn btn-danger delete-user ml-1">Delete</a></td></tr>';
                                     $('#listItem').append(dataItem);
                                     $('#ajax-crud-modal').modal('hide');
                                     $('#addForm').trigger("reset");
@@ -161,10 +163,10 @@
                                 contentType: false,
                                 processData: false,
                                 success: function (data) {
-                                    $("#product_id_" + data.id).html(data.product_id);
-                                    $("#color_name_" + data.id).html(data.color_name);
-                                    $("#created_at_" + data.id).html(data.created_at);
-                                    $("#updated_at_" + data.id).html(data.updated_at);
+                                    $("#product_id_" + data.colors.id).html(data.product.name_phone);
+                                    $("#color_name_" + data.colors.id).html(data.colors.color_name);
+                                    $("#created_at_" + data.colors.id).html(data.colors.created_at);
+                                    $("#updated_at_" + data.colors.id).html(data.colors.updated_at);
                                     $('#ajax-crud-modal').modal('hide');
                                     $('#editForm').trigger("reset");
                                     $('#btn-savechanges').html('Save Changes');

@@ -91,7 +91,7 @@
                     <div class="form-group">
                         <label class="col-sm-12">Role</label>
                         <div class="col-sm-12">
-                            {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control','multiple')) !!}
+                            {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control')) !!}
                             <span class="text-danger">
                                 <strong id="role-error"></strong>
                             </span>

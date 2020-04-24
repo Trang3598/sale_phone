@@ -184,7 +184,7 @@
                                     + '</td><td id="name_phone_">' + data.products.name_phone + '</td><td id="quantity_">' + data.products.quantity +
                                     '</td><td id="price_">' + data.products.price + '</td><td id = "sale_phone_">' + data.sale_phone + '</td><td id = "created_at_">' + data.products.created_at
                                     + '</td>';
-                                dataItem += '<td><a href="javascript:void(0)" id="image-product" data-id="' + data.products.id + '" class="image-product btn btn-primary">Watch</a></td>';
+                                dataItem += '<td><a href="javascript:void(0)" id="image-product" data-id="' + data.products.id + '" class="image-product btn btn-primary">Image</a></td>';
                                 dataItem += '<td><a href="javascript:void(0)" id="edit-product" data-id="' + data.products.id + '" class="btn btn-success mr-2 edit-product">Update</a></td>';
                                 dataItem += '<td><a href="javascript:void(0)" id="delete-product" data-id="' + data.products.id + '" class="btn btn-danger delete-user ml-1">Delete</a></td></tr>';
                                 $('#listItem').append(dataItem);

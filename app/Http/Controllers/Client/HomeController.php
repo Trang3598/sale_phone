@@ -82,7 +82,12 @@ class HomeController
     public function getProduct($id)
     {
         $products = $this->product->findThrough('id_cate', $id);
-        return view('client.products', compact('products'));
+        $today = Carbon::now();
+        $start_promotion = DB::table('products')->select('start_promotion')->get()[0];
+        $end_promotion = DB::table('products')->select('end_promotion')->get()[0];
+        $start = (array)$start_promotion;
+        $end = (array)$end_promotion;
+        return view('client.products', compact('products','today', 'start', 'end'));
     }
 
     public function sendInfor()
@@ -266,23 +271,22 @@ class HomeController
     {
         $customer_info = session()->get('customer_info');
         $order = session()->get('order')[0];
+        $client = new Client([
+            'headers' => [
+                'content-type' => 'application/json',
+                'Accept' => 'application/json'
+            ]
+        ]);
+        $response = $client->request('POST', 'http://localhost/sale_phone/public/api/create-payment', [
+//            'json' => [
+//                "order" => (array)$order[0],
+//            ]
+                'order' => $order
+        ]);
+        $data = $response->getBody();
+        $data1 = json_decode($data);
+//        dd($data1);
         if ($order != null) {
-            $client = new Client([
-                'headers' => [
-                    'content-type' => 'application/json',
-                    'Accept' => 'application/json'
-                ]
-            ]);
-
-            $response = $client->request('POST', 'http://localhost/sale_phone/public/api/create-payment', [
-                'json' => [
-                    'order' => $order,
-                ]
-            ]);
-
-            $data1 = $response->getBody();
-            $data1 = json_decode($data1);
-            dd($data1);
             $order_details = $this->order_detail->findThrough('order_id', $order[0]->id);
             return view('client.order_info', compact('customer_info', 'order', 'order_details'));
         } else {

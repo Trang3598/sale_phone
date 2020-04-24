@@ -13,14 +13,16 @@ use Illuminate\Support\Facades\Response;
 class ImageController extends Controller
 {
     protected $image;
+    protected $product;
 
-    public function __construct(Image $image)
+    public function __construct(Image $image, Product $product)
     {
         parent::__construct();
         $this->image = new Repository($image);
+        $this->product = new Repository($product);
         $this->middleware('permission:image-list');
-        $this->middleware('permission:image-create', ['only' => ['create','store']]);
-        $this->middleware('permission:image-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:image-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:image-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:image-delete', ['only' => ['destroy']]);
     }
 
@@ -29,7 +31,7 @@ class ImageController extends Controller
         $items = $request->items ?? 10;
         $count = $this->image->all($items)->total();
         $images = $this->image->all($items);
-        return view('admin.image.list', compact('images','count','items'));
+        return view('admin.image.list', compact('images', 'count', 'items'));
     }
 
     public function create()
@@ -49,7 +51,8 @@ class ImageController extends Controller
             $data['image'] = $image;
         }
         $images = $this->image->create($data);
-        return Response::json($images);
+        $product = $this->product->find($request->product_id);
+        return Response::json(['images' => $images,'product' => $product]);
     }
 
     public function show($id)
@@ -76,7 +79,8 @@ class ImageController extends Controller
             $data['image'] = $image;
         }
         $images = $this->image->update($id, $data);
-        return Response::json($images);
+        $product = $this->product->find($request->product_id);
+        return Response::json(['images' => $images,'product' => $product]);
     }
 
     public function destroy($id)
@@ -96,7 +100,7 @@ class ImageController extends Controller
         if ($request->ajax()) {
             $output = "";
             $images = $this->image->with(['product'])
-                ->join('products', 'images.product_id', '=', 'products.id')->where('images.deleted_at',null)
+                ->join('products', 'images.product_id', '=', 'products.id')->where('images.deleted_at', null)
                 ->where('products.name_phone', 'like', '%' . $request->all()['key'] . '%')
                 ->select('images.*', 'products.name_phone')
                 ->get();
@@ -104,8 +108,8 @@ class ImageController extends Controller
                 $buttonUpdate = '<div class="btn-edit"> <a href="javascript:void(0)" class="edit-image btn btn-success" data-id= "' . $image->id . '">Update</a></div>';
                 $buttonDelete = '<a href="javascript:void(0)" id="delete-image" class="btn btn-danger delete-image" data-id="' . $image->id . '">Delete</a>';
                 $fileImage = '<a href="javascript:void(0)" class="show-image"
-                                       data-id="'.$image->id.'">
-                                        <img id="image_'.$image->id.'" src="images/'.$image->image.'" alt=""
+                                       data-id="' . $image->id . '">
+                                        <img id="image_' . $image->id . '" src="images/' . $image->image . '" alt=""
                                              style="height:50px;width: 50px" class="img-responsive"/>
                                     </a>';
                 $output .= '<tr>' .

@@ -128,9 +128,10 @@
                                 contentType: false,
                                 processData: false,
                                 success: function (data) {
-                                    var dataItem = '<tr id="id_' + data.id + '"><td>' + data.id + '</td><td>' + data.product_id + '</td><td><a href="javascript:void(0)" class="show-image" data-id ="' + data.id + '"><img id="image_' + data.id + '"  src = "images/' + data.image + '" alt ="" style="height:50px;width: 50px" class="img-responsive" />' + '</td><td>' + data.created_at + '</td><td>' + data.updated_at + '</td>';
-                                    dataItem += '<td><a href="javascript:void(0)" id="edit-image" data-id="' + data.id + '" class="btn btn-success mr-2">Update</a></td>';
-                                    dataItem += '<td><a href="javascript:void(0)" id="delete-image" data-id="' + data.id + '" class="btn btn-danger delete-user ml-1">Delete</a></td></tr>';
+                                    var dataItem = '<tr id="id_' + data.images.id + '"><td>' + data.images.id + '</td><td id="product_id_'+data.images.id+'">' + data.product.name_phone
+                                        + '</td><td><a href="javascript:void(0)" class="show-image" data-id ="' + data.images.id + '"><img id="image_' + data.images.id + '"  src = "images/' + data.images.image + '" alt ="" style="height:50px;width: 50px" class="img-responsive" />' + '</td><td>' + data.images.created_at + '</td><td>' + data.images.updated_at + '</td>';
+                                    dataItem += '<td><a href="javascript:void(0)" id="" data-id="' + data.images.id+ '" class="edit-image btn btn-success mr-2">Update</a></td>';
+                                    dataItem += '<td><a href="javascript:void(0)" id="delete-image" data-id="' + data.images.id + '" class="btn btn-danger delete-user ml-1">Delete</a></td></tr>';
                                     $('#listItem').append(dataItem);
                                     $('#ajax-crud-modal').modal('hide');
                                     $('#addForm').trigger("reset");
@@ -164,10 +165,10 @@
                                 contentType: false,
                                 processData: false,
                                 success: function (data) {
-                                    $("#product_id" + data.id).html(data.product_id);
-                                    $("#image_" + data.id).attr('src', 'images/' + data.image);
-                                    $("#created_at_" + data.id).html(data.created_at);
-                                    $("#updated_at_" + data.id).html(data.updated_at);
+                                    $("#product_id" + data.images.id).html(data.product.name_phone);
+                                    $("#image_" + data.images.id).attr('src', 'images/' + data.images.image);
+                                    $("#created_at_" + data.images.id).html(data.images.created_at);
+                                    $("#updated_at_" + data.images.id).html(data.images.updated_at);
                                     $('#ajax-crud-modal').modal('hide');
                                     $('#editForm').trigger("reset");
                                     $('#btn-savechanges').html('Save Changes');

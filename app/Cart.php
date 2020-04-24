@@ -21,7 +21,6 @@ class Cart extends Model
             $this->discount = $oldCart->discount;
         }
     }
-
     public function add($item, $id)
     {
         if ($item->start_promotion <= Carbon::now() && Carbon::now() <= $item->end_promotion) {

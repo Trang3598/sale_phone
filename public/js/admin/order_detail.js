@@ -18,6 +18,7 @@ $(document).ready(function () {
     });
     $(document).on('change', '#selectProduct', function (event) {
         var product_id = $(this).val();
+        $('#selectColor').empty();
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -36,11 +37,22 @@ $(document).ready(function () {
                     $('#price_order_detail').attr('value', data);
                 }
             }
+        });
+        $.ajax({
+            url: 'admin/order/set_color',
+            method: "post",
+            data: {product_id: product_id},
+            success: function (list) {
+                for (var i = 0; i < list.data.length; i++) {
+                    $('#selectColor').append('<option value="' + list.data[i].id + ' " class="optionColor">' + list.data[i].color_name + '</option>');
+                }
+            }
         })
     });
     $('#add_order_detail').submit(function (event) {
         event.preventDefault();
         var order_id = $(this).data('id');
+        console.log(order_id)
         var data = new FormData($('#add_order_detail_form')[0]);
         $.ajaxSetup({
             headers: {

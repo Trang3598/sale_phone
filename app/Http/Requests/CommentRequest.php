@@ -25,12 +25,9 @@ class CommentRequest extends FormRequest
     {
         $arr_validate = [
             'product_id' => 'required',
+            'user_id' => 'required',
             'comment_content' => 'required|min:5|string|max:255',
-            'phone_number' => 'required|numeric|digits_between:1,10',
         ];
-//        if ($this->comment) {
-//            $arr_validate['phone_number'] = 'required|numeric|digits_between:1,10|unique:comments,phone_number,' . $this->comment;
-//        }
         return $arr_validate;
     }
 }

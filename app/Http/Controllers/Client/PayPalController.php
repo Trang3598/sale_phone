@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Cart;
 use App\Order;
 use App\OrderDetail;
 use App\Repositories\Repository;
@@ -27,7 +28,6 @@ class PayPalController
     private $totalAmount;
     private $returnUrl;
     private $cancelUrl;
-
     private $order_detail, $order;
 
     public function __construct(OrderDetail $order_detail, Order $order)
@@ -78,8 +78,10 @@ class PayPalController
         return $this;
     }
 
-    public function createPayment()
+    public function createPayment(Request $request)
     {
+        $oder = $request;
+        dd($request->order);
         $payer = new Payer();
         $payer->setPaymentMethod("paypal");
         $item1 = new Item();
@@ -95,7 +97,7 @@ class PayPalController
             ->setSku("321321") // Similar to `item_number` in Classic API
             ->setPrice(2);
         $itemList = new ItemList();
-        $itemList->setItems(array($item1, $item2));
+        $itemList->setItems(array($item1));
 
         $details = new Details();
         $details->setShipping(1.2)
@@ -136,6 +138,8 @@ class PayPalController
             echo $ex;
             exit(1);
         }
+        $data = $this->order->getItemCart();
+//        dd($data);
         return $payment;
     }
 

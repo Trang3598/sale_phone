@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Color;
 use App\Deliverer;
 use App\Http\Requests\OrderDetailRequest;
 use App\Http\Requests\OrderRequest;
@@ -23,14 +24,16 @@ class OrderController extends Controller
     protected $order_detail;
     protected $deliverer;
     protected $status;
+    protected $color;
 
-    public function __construct(Order $order, OrderDetail $orderDetail, Deliverer $deliverer, Status $status)
+    public function __construct(Order $order, OrderDetail $orderDetail, Deliverer $deliverer, Status $status,Color $color)
     {
         parent::__construct();
         $this->order = new Repository($order);
         $this->order_detail = new Repository($orderDetail);
         $this->deliverer = new Repository($deliverer);
         $this->status = new Repository($status);
+        $this->color = new Repository($color);
         $this->middleware('permission:order-list');
         $this->middleware('permission:order-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:order-edit', ['only' => ['edit', 'update']]);
@@ -133,9 +136,10 @@ class OrderController extends Controller
         $order_details = $this->order->with(['orderDetail'])
             ->join('order_details', 'order_details.order_id', '=', 'orders.id')
             ->join('products', 'order_details.product_id', '=', 'products.id')
+            ->join('colors', 'order_details.color_id', '=', 'colors.id')
             ->where('order_details.deleted_at', null)
             ->where('order_details.order_id', '=', $id)
-            ->select('order_details.*', 'products.name_phone')->get();
+            ->select('order_details.*', 'products.name_phone','colors.color_name')->get();
         $total_price = 0;
         foreach ($order_details as $order_detail) {
             $total_price = $total_price + ($order_detail->price) * ($order_detail->sale_quantity);
@@ -171,6 +175,11 @@ class OrderController extends Controller
         return Response::json($price);
     }
 
+    public function setColor(Request $request){
+        $product_id = $request->product_id;
+        $listColors = $this->color->findThrough('product_id',$product_id);
+        return Response::json($listColors);
+    }
     public function addOrderDetailAction(OrderDetailRequest $request, $id)
     {
         $order_detail = $this->order_detail->create($request->all());
@@ -188,7 +197,9 @@ class OrderController extends Controller
         $listProducts = Product::all();
         $products = $listProducts->pluck('name_phone', 'id')->all();
         $order_detail = $this->order_detail->find($id);
-        return view('admin.order.update_order_detail', compact('products', 'order_detail', 'id'));
+        $listColors = Color::all();
+        $colors = $listColors->pluck('color_name', 'id')->all();
+        return view('admin.order.add_order_detail', compact('products', 'id','colors','order_detail'));
     }
 
     public function updateOrderDetail(OrderDetailRequest $request, $id)

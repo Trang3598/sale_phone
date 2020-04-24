@@ -24,15 +24,9 @@ class SalePhoneRequest extends FormRequest
     public function rules()
     {
         $arr_validate = [
-            'phone_id' => 'required|unique:sale_phones,phone_id,',
+            'phone_id' => 'required',
             'quantity' => 'required|numeric|digits_between:1,10',
         ];
         return $arr_validate;
-    }
-    public function messages()
-    {
-        return [
-            'phone_id.unique' => 'This phone name has already been choosen.',
-        ];
     }
 }

@@ -14,11 +14,13 @@ use Illuminate\Support\Facades\Response;
 class ColorController extends Controller
 {
     protected $color;
+    protected $product;
 
     public function __construct(Color $color, Product $product)
     {
         parent::__construct();
         $this->color = new Repository($color);
+        $this->product = new Repository($product);
         $this->middleware('permission:color-list');
         $this->middleware('permission:color-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:color-edit', ['only' => ['edit', 'update']]);
@@ -44,7 +46,8 @@ class ColorController extends Controller
     public function store(ColorRequest $request)
     {
         $colors = $this->color->create($request->all());
-        return Response::json($colors);
+        $product = $this->product->find($request->product_id);
+        return Response::json(['colors' => $colors,'product' => $product]);
     }
 
     public function show($id)
@@ -64,7 +67,8 @@ class ColorController extends Controller
     public function update($id, ColorRequest $request)
     {
         $colors = $this->color->update($id, $request->all());
-        return Response::json($colors);
+        $product = $this->product->find($request->product_id);
+        return Response::json(['colors' => $colors,'product' => $product]);
     }
 
     public function destroy($id)

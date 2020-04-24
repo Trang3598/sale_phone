@@ -63,6 +63,7 @@ Route::post('settingAccount/{user}', 'UserController@settingAccount')->name('use
 Route::get('admin/order/detail/{id}', 'OrderController@detail')->name('detail')->middleware('auth');
 Route::get('admin/order/add_order_detail/{id}', 'OrderController@addOrderDetail')->name('add_order_detail')->middleware('auth');
 Route::post('admin/order/set_price', 'OrderController@setPrice')->name('set_price')->middleware('auth');
+Route::post('admin/order/set_color', 'OrderController@setColor')->name('set_color')->middleware('auth');
 Route::post('admin/order/add_order_detail_action/{id}', 'OrderController@addOrderDetailAction')->name('add_order_detail_action')->middleware('auth');
 Route::get('admin/order/delete_product_from_cart/{id}', 'OrderController@deleteProductFromCart')->name('delete_product_from_cart')->middleware('auth');
 Route::get('admin/order/update_view_order_detail/{id}', 'OrderController@updateViewOrderDetail')->name('update_view_order_detail')->middleware('auth');

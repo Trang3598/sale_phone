@@ -1,4 +1,4 @@
-<div class="modal fade" id="ajax-crud-modal" aria-hidden="true">
+<div class="modal fade" id="ajax-crud-modal" aria-hidden="true" >
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -25,6 +25,15 @@
                             {!! Form::select('product_id', ['' => 'Enter the product ...'] + $products,$order_detail->product_id,['class'=> 'form-control']) !!}
                             <span class="text-danger">
                                 <strong id="product_id-error"></strong>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-12">Product</label>
+                        <div class="col-sm-12">
+                            {!! Form::select('color_id', ['' => 'Enter the color ...'] + $colors,$order_detail->color_id,['class'=> 'form-control']) !!}
+                            <span class="text-danger">
+                                <strong id="color_id-error"></strong>
                             </span>
                         </div>
                     </div>

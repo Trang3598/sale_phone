@@ -110,7 +110,7 @@
                             var order_detail_id = $(this).data('id');
                             $.get('admin/order_detail/' + order_detail_id + '/edit', function (data) {
                                 $("#order_detail").html(data);
-                                $('#userCrudModal').html("Edit Order Detaill");
+                                $('#userCrudModal').html("Edit Order Detail");
                                 $('#btn-save').val("edit-order_detail");
                                 $('#ajax-crud-modal').modal('show');
                             })
@@ -130,9 +130,13 @@
                                 contentType: false,
                                 processData: false,
                                 success: function (data) {
-                                    var dataItem = '<tr id="id_' + data.id + '"><td>' + data.id + '</td><td>' + data.order_id + '</td><td>' + data.product_id + '</td><td>' + data.sale_quantity + '</td><td>' + data.price + '</td><td>' + data.created_at + '</td><td>' + data.updated_at + '</td>';
-                                    dataItem += '<td><a href="javascript:void(0)" id="edit-order_detail" data-id="' + data.id + '" class="btn btn-success mr-2">Update</a></td>';
-                                    dataItem += '<td><a href="javascript:void(0)" id="delete-order_detail" data-id="' + data.id + '" class="btn btn-danger delete-user ml-1">Delete</a></td></tr>';
+                                    console.log(data);
+                                    var dataItem = '<tr id="id_' + data.order_details.id + '"><td>' + data.order_details.id + '</td><td id="order_id_' + data.order_details.id + '">' + data.order_details.order_id + '</td><td id="name_phone_' + data.order_details.id + '">' + data.product.name_phone +
+                                        '</td><td id="color_id_' + data.order_details.id + '">' + data.color.color_name + '</td><td id = "sale_quantity_' + data.order_details.id + '">' + data.order_details.sale_quantity +
+                                        '</td><td id="price_' + data.order_details.id + '">' + data.order_details.price + '</td><td id = "created_at' + data.order_details.id + '">' + data.order_details.created_at
+                                        + '</td><td id="updated_at_' + data.order_details.id + '">' + data.order_details.updated_at + '</td>';
+                                    dataItem += '<td><a href="javascript:void(0)" id="" data-id="' + data.order_details.id + '" class="edit-order_detail btn btn-success mr-2">Update</a></td>';
+                                    dataItem += '<td><a href="javascript:void(0)" id="delete-order_detail" data-id="' + data.order_details.id + '" class="btn btn-danger delete-user ml-1">Delete</a></td></tr>';
                                     $('#listItem').append(dataItem);
                                     $('#ajax-crud-modal').modal('hide');
                                     $('#addForm').trigger("reset");
@@ -143,6 +147,7 @@
                                     if (data.responseJSON.errors) {
                                         $('#order_id-error').html(data.responseJSON.errors.order_id);
                                         $('#product_id-error').html(data.responseJSON.errors.product_id);
+                                        $('#color_id-error').html(data.responseJSON.errors.color_id);
                                         $('#sale_quantity-error').html(data.responseJSON.errors.sale_quantity);
                                         $('#price-error').html(data.responseJSON.errors.price);
                                         $('#created_at-error').html(data.responseJSON.errors.created_at);
@@ -167,12 +172,13 @@
                                 contentType: false,
                                 processData: false,
                                 success: function (data) {
-                                    $("#order_id_" + data.id).html(data.order_id);
-                                    $("#product_id_" + data.id).html(data.product_id);
-                                    $("#sale_quantity_" + data.id).html(data.sale_quantity);
-                                    $("#price_" + data.id).html(data.price);
-                                    $("#created_at_" + data.id).html(data.created_at);
-                                    $("#updated_at_" + data.id).html(data.updated_at);
+                                    $("#order_id_" + data.order_details.id).html(data.order_details.order_id);
+                                    $("#product_id_" + data.order_details.id).html(data.product.name);
+                                    $("#color_id_" + data.order_details.id).html(data.color.color_name);
+                                    $("#sale_quantity_" + data.order_details.id).html(data.order_details.sale_quantity);
+                                    $("#price_" + data.order_details.id).html(data.order_details.price);
+                                    $("#created_at_" + data.order_details.id).html(data.order_details.created_at);
+                                    $("#updated_at_" + data.order_details.id).html(data.order_details.updated_at);
                                     $('#ajax-crud-modal').modal('hide');
                                     $('#editForm').trigger("reset");
                                     $('#btn-savechanges').html('Save Changes');
@@ -185,6 +191,9 @@
                                         }
                                         if (data.responseJSON.errors.product_id) {
                                             $('#product_id-error').html(data.responseJSON.errors.product_id);
+                                        }
+                                        if (data.responseJSON.errors.color_id) {
+                                            $('#color_id-error').html(data.responseJSON.errors.color_id);
                                         }
                                         if (data.responseJSON.errors.sale_quantity) {
                                             $('#sale_quantity-error').html(data.responseJSON.errors.sale_quantity);

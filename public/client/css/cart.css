@@ -654,6 +654,7 @@ div.drop-down span:first-child a:after {
     padding-bottom: 5px;
     margin-bottom: 20px;
     box-shadow: 0 0 20px rgba(0, 0, 0, .15);
+    width:70%;
 }
 
 input::-webkit-outer-spin-button,

@@ -124,8 +124,10 @@
                                 contentType: false,
                                 processData: false,
                                 success: function (data) {
-                                    var dataItem = '<tr id="id_' + data.id + '"><td>' + data.id + '</td><td>' + data.deliverer_name + '</td><td>' + data.deliverer_phone + '</td><td>' + data.created_at + '</td><td>' + data.updated_at + '</td>';
-                                    dataItem += '<td><a href="javascript:void(0)" id="edit-deliverer" data-id="' + data.id + '" class="btn btn-success mr-2">Update</a></td>';
+                                    var dataItem = '<tr id="id_' + data.id + '"><td>' + data.id + '</td><td id="deliverer_name_' + data.id + '">' + data.deliverer_name +
+                                        '</td><td id = "deliverer_phone_' + data.id + '">' + data.deliverer_phone + '</td><td id = "created_at_' + data.id + '">'
+                                        + data.created_at + '</td><td id="updated_at_' + data.id + '">' + data.updated_at + '</td>';
+                                    dataItem += '<td><a href="javascript:void(0)"  data-id="' + data.id + '" class="edit-deliverer btn btn-success mr-2">Update</a></td>';
                                     dataItem += '<td><a href="javascript:void(0)" id="delete-deliverer" data-id="' + data.id + '" class="btn btn-danger delete-user ml-1">Delete</a></td></tr>';
                                     $('#listItem').append(dataItem);
                                     $('#ajax-crud-modal').modal('hide');
@@ -162,6 +164,7 @@
                                 contentType: false,
                                 processData: false,
                                 success: function (data) {
+                                    console.log(data);
                                     $("#deliverer_name_" + data.id).html(data.deliverer_name);
                                     $("#deliverer_phone_" + data.id).html(data.deliverer_phone);
                                     $("#created_at_" + data.id).html(data.created_at);
