@@ -271,21 +271,6 @@ class HomeController
     {
         $customer_info = session()->get('customer_info');
         $order = session()->get('order')[0];
-        $client = new Client([
-            'headers' => [
-                'content-type' => 'application/json',
-                'Accept' => 'application/json'
-            ]
-        ]);
-        $response = $client->request('POST', 'http://localhost/sale_phone/public/api/create-payment', [
-//            'json' => [
-//                "order" => (array)$order[0],
-//            ]
-                'order' => $order
-        ]);
-        $data = $response->getBody();
-        $data1 = json_decode($data);
-//        dd($data1);
         if ($order != null) {
             $order_details = $this->order_detail->findThrough('order_id', $order[0]->id);
             return view('client.order_info', compact('customer_info', 'order', 'order_details'));
